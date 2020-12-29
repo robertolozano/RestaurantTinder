@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8"> <!-- Binary encoding of characters -->
+    <title>Restaurant Tinder</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- This will come in handy later -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css" type="text/css" charset="utf-8" />
+    <link rel="stlyesheet" href="reset.css">
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <script src="https://kit.fontawesome.com/4eb0e453ec.js" crossorigin="anonymous"></script>
+</head>
+    
+<body>
+    
+    <header>
+        <div class="navbar">
+            <div>
+                <h1>Restaurant Tinder</h1>
+            </div>
+          
+          
+            <div id="logo">
+                <img id="logoPic" src="https://cdn.glitch.com/aa77cb65-0ae2-4388-9521-dc70cf3b8f55%2Flogo-removebg-preview%20(1).png?v=1590852320072">
+            </div>
+        </div>
+    </header>
+    
+    <div class="main">
+        <div id="start_div">
+            <button id="start" class="shown">Start new game</button>
+        </div>
+        
+        <div id="search_bar" class="hidden">
+          
+            <div class="autocomplete"> <!--style="width:300px;">-->
+              <p>
+                Keywords:<input id="myInput" type="text">
+              </p>
+            </div>
+<!--             <div id="keywords_div">
+                <p>
+                  Keywords: <input type="text" id="keywords">
+                </p>
+            </div> -->
+          
+            <div id="location_div">
+                <p>
+                    Location: <input type="text" id="location">
+                </p>
+            </div>
+          
+            <div id="get_restaurants_div">
+                <button class="host-buttons" id="get_restaurants">Get Restaurants!</button>
+                <button class="host-buttons hidden" id="start_game">Start Game!</button>
+            </div>
+       
+            <div id="link_div">
+              <p>Invite Link:</p>
+              <a id="link" href=""></a>
+            </div>
+          
+        </div>
+      
+    </div>
+    <script src="./script.js"></script>  
+</body>
+
+</html>

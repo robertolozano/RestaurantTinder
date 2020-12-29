@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8"> <!-- Binary encoding of characters -->
+    <title>Restaurant Tinder</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- This will come in handy later -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css" type="text/css" charset="utf-8" />
+    <link rel="stlyesheet" href="reset.css">
+<!--     <link rel="stylesheet" type="text/css" href="index.css"> -->
+    <link rel="stylesheet" type="text/css" href="voter.css">
+     <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">
+    <script src="https://kit.fontawesome.com/4eb0e453ec.js" crossorigin="anonymous"></script>
+  
+    
+  
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.css">
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+
+<script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+  
+</head>
+    
+<body>
+    <header class="hidden">
+      <div class="navbar" id="navbarID">
+          <div>
+              <h1>Restaurant Tinder Winner</h1>
+          </div>
+
+          <div id="logo">
+              <img id="logoPic" src="https://cdn.glitch.com/aa77cb65-0ae2-4388-9521-dc70cf3b8f55%2Flogo-removebg-preview%20(1).png?v=1590852320072">
+          </div>
+
+      </div>
+    </header>
+    
+    <div class="main">
+      <div class="swiper-container">
+        <div class="swiper-wrapper">
+          
+          <div id="slide1" class="swiper-slide"></div>
+          
+          <div id="slide2" class="swiper-slide">
+            <div id="slide_cover">
+              <img id="business_pic">
+              
+              <div id="info_section">
+                <div id="slide2_div1">
+                  <p id="business"></p>
+                  <p id="business_price"></p>
+                </div>
+
+                <div id="slide2_div2">
+                  <div #id="stars">
+                      <i id="first_star" class="far fa-star"></i>
+                      <i id="second_star" class="far fa-star"></i>
+                      <i id="third_star" class="far fa-star"></i>
+                      <i id="fourth_star" class="far fa-star"></i>
+                      <i id="fifth_star" class="far fa-star"></i>
+                  </div>
+                  <!-- <p id="business_rating"></p> -->
+                </div>
+
+                <p id="business_address">123 Davis Road</p>
+                <p id="round1_votes"></p>
+                <button id="business_reviews">Reviews</button>
+              </div>
+              
+            </div>
+          </div>
+          
+          <div id="slide3" class="swiper-slide"></div>
+          
+        </div>
+        <!-- <div class="swiper-pagination"></div> -->
+        
+        <img id="prev" class="swiper-button-prev" src="https://cdn.glitch.com/aa77cb65-0ae2-4388-9521-dc70cf3b8f55%2FrejectButton.svg?v=1590757142530">
+        <img id="next" class="swiper-button-next" src="https://cdn.glitch.com/aa77cb65-0ae2-4388-9521-dc70cf3b8f55%2FheartButton.svg?v=1590757145636">
+
+        <!-- <div class="swiper-scrollbar"></div> -->
+        
+      </div>
+      
+      <div id="reviews" class="hidden">
+        <div id="reviews_div">
+          <div id="review1">
+            <p id="review1_text"></p>
+            <div id="review1_stars">
+              <i id="review1_first_star" class="far fa-star"></i>
+              <i id="review1_second_star" class="far fa-star"></i>
+              <i id="review1_third_star" class="far fa-star"></i>
+              <i id="review1_fourth_star" class="far fa-star"></i>
+              <i id="review1_fifth_star" class="far fa-star"></i>
+              <p id="review1_date"></p>
+              <p id="review1_reviewer"></p>
+            </div>
+<!--             <p id="review1_date"></p> -->
+          </div>
+          
+          <div id="review2">
+            <p id="review2_text"></p>
+            <div id="review2_stars">
+              <i id="review2_first_star" class="far fa-star"></i>
+              <i id="review2_second_star" class="far fa-star"></i>
+              <i id="review2_third_star" class="far fa-star"></i>
+              <i id="review2_fourth_star" class="far fa-star"></i>
+              <i id="review2_fifth_star" class="far fa-star"></i>
+              <p id="review2_date"></p>
+              <p id="review2_reviewer"></p>
+            </div>
+<!--             <p id="review2_date"></p> -->
+          </div>
+          
+          <div id="review3">
+            <p id="review3_text"></p>
+            <div id="review3_stars">
+              <i id="review3_first_star" class="far fa-star"></i>
+              <i id="review3_second_star" class="far fa-star"></i>
+              <i id="review3_third_star" class="far fa-star"></i>
+              <i id="review3_fourth_star" class="far fa-star"></i>
+              <i id="review3_fifth_star" class="far fa-star"></i>
+              <p id="review3_date"></p>
+              <p id="review3_reviewer"></p>
+            </div>
+<!--             <p id="review3_date"></p> -->
+          </div>
+        </div>
+      </div>
+      
+      <div id="close_reviews" class="hidden">
+        <p>&#10006;</p>
+      </div>
+      
+      <div id="overlay">
+        
+      </div>
+      
+    </div>
+  
+    <script src="https://unpkg.com/swiper/js/swiper.js"></script>
+    <script src="https://unpkg.com/swiper/js/swiper.min.js"></script>
+    <script src="./voter.js"></script>  
+</body>
+
+</html>

@@ -1,0 +1,426 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body{
+/*   background: red; */
+  display: flex;
+  flex-direction: column;
+}
+
+header{
+  position:relative;
+}
+
+.navbar{
+    position: absolute;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: #ff6b6b;
+    color: white;
+    width: 100%;
+    padding: 10px 0px 10px 0px;
+}
+
+#logo{
+    display: flex;
+    max-height: auto;
+    max-width: 35px;
+    padding-left: 10px;
+}
+
+#logoPic{
+    display: flex;
+    height: 100%;
+    width: 100%;
+}
+
+.main{
+  display: flex;
+  background: #ff6b6b;
+  height: 100vh;
+}
+
+.swiper-container{
+  display: flex;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+/*   background: green; */
+    border-radius:50px;
+
+}
+
+#slide1{
+  display: flex;
+/*   box-sizing: border-box; */
+}
+
+#slide2{
+  display: flex;
+  flex-direction: column;
+/*   justify-content: flex-start; */
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+    border-radius:50px;
+
+}
+
+#slide2_div1{
+  justify-content: space-between;
+  font-size: 25px;
+  padding-top: 9px;
+    border-radius:50px;
+
+}
+
+#slide2_div2{
+  font-size: 20px;
+  padding-top: 6px;
+     border-radius:50px;
+
+}
+
+#slide2_div1, #slide2_div2{
+  display: flex;
+  flex-direction: row;
+}
+
+#business_address{
+  font-size: 20px;
+  padding-top: 8px;
+  color: black;
+}
+
+#business_reviews{
+  margin-top: 5px;
+  background:none;
+  padding: 5px 8px 5px 8px;
+  font-size: 18px;
+  border-radius: 10px;
+  border-style: solid;
+  border-color: black;
+}
+#round1_votes{
+  font-size: 17px;
+  padding-top: 2px;
+  padding-bottom: 1px;
+}
+
+#slide3{
+  display: flex;
+  box-sizing: border-box;
+}
+
+#info_section{
+  width: 90%;
+  align-self:center;
+}
+
+#slide_cover{
+  display: flex;
+  flex-direction:column;
+  width: 100%;
+  height: 100%;
+  background: white;
+    border-radius:50px;
+
+}
+
+#xPic{
+  width: 20%;
+}
+
+#checkPic{
+  width: 20%;
+}
+
+#business{
+    font-weight: 600;
+}
+
+#business_pic{
+    width: 100%;
+    height: 50%;
+    border-radius: 50px 50px 0px 0px;
+
+}
+
+#next{
+  width: 60px;
+  height: auto;
+  right: 10%;
+  top: 90%;
+  background-color: pink;
+  border-radius: 35px;
+}
+
+#prev{
+  width: 60px;
+  height: auto;
+  left: 10%;
+  top: 90%;
+  bottom: 0%;
+  background-color: pink;
+  border-radius: 35px;
+}
+
+.hidden{
+    opacity: 0;
+    z-index: -5;
+}
+
+.shown{
+    opacity: 100;
+    z-index: 5;
+}
+
+/*tablet*/
+@media (min-width: 600px) and (max-width: 768px){
+  body{
+    height: 100%;
+    background: purple;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .main{
+    display: flex;
+    background: #ff6b6b;
+  }
+
+  .swiper-container{
+    display: flex;
+    width: 100%;
+    height: 500px;
+    box-sizing: border-box;
+    top: 18%;
+  }
+
+  #slide1{
+    display: flex;
+    box-sizing: border-box;
+  }
+
+  #slide2{
+    display: flex;
+    flex-direction: column;
+  /*   justify-content: flex-start; */
+    align-items: center;
+    box-sizing: border-box;
+    width: 500px;
+  }
+
+  #slide2_div1, #slide2_div2{
+    display: flex;
+    flex-direction: row;
+  }
+
+  #slide3{
+    display: flex;
+    box-sizing: border-box;
+  }
+
+  #info_section{
+    width: 90%;
+    align-self:center;
+  }
+
+  #slide_cover{
+    display: flex;
+    flex-direction:column;
+    width: 400px;
+    height: 100%;
+    background: white;
+  }
+
+  #xPic{
+    width: 20%;
+  }
+
+  #checkPic{
+    width: 20%;
+  }
+
+  #business{
+      font-weight: 600;
+  }
+
+  #business_pic{
+      width: 100%;
+      height: 50%;
+  }
+
+  #next{
+    width: 60px;
+    height: auto;
+    right: 5%;
+    top: 50%;
+    background: none;
+  }
+
+  #prev{
+    width: 60px;
+    height: auto;
+    left: 5%;
+    top: 50%;
+    background: none;
+  } 
+}
+
+
+/*desktop*/
+@media (min-width: 768px){
+  body{
+    height: 100%;
+    background: #ff6b6b;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .main{
+    display: flex;
+    background: #ff6b6b;
+  }
+
+  .swiper-container{
+    display: flex;
+    width: 100%;
+    height: 500px;
+    box-sizing: border-box;
+    top: 18%;
+  }
+
+  #slide1{
+    display: flex;
+    box-sizing: border-box;
+  }
+
+  #slide2{
+    display: flex;
+    flex-direction: column;
+  /*   justify-content: flex-start; */
+    align-items: center;
+    box-sizing: border-box;
+    width: 500px;
+  }
+
+  #slide2_div1, #slide2_div2{
+    display: flex;
+    flex-direction: row;
+  }
+
+  #slide3{
+    display: flex;
+    box-sizing: border-box;
+  }
+
+  #info_section{
+    width: 90%;
+    align-self:center;
+  }
+
+  #slide_cover{
+    display: flex;
+    flex-direction:column;
+    width: 500px;
+    height: 100%;
+    background: white;
+  }
+
+  #xPic{
+    width: 20%;
+  }
+
+  #checkPic{
+    width: 20%;
+  }
+
+  #business{
+    font-weight: 600;
+  }
+
+  #business_pic{
+      width: 100%;
+      height: 50%;
+  }
+
+  #next{
+    width: 60px;
+    height: auto;
+    right: 8%;
+    top: 50%;
+    background: none;
+  }
+
+  #prev{
+    width: 60px;
+    height: auto;
+    left: 8%;
+    top: 50%;
+    bottom: 0%;
+    background: none;
+  } 
+}
+
+
+#overlay{
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 2;
+}
+
+#reviews{
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  position: absolute;
+  padding: 0px;
+  border-radius: 20px;
+  justify-self:center;
+  bottom: 1%;
+  top: 2%;
+  left: 5%;
+  right: 5%;
+  height: 90%;
+  align-items:center;
+}
+
+#reviews_div{
+  padding-top: 4px;
+  width: 90%;
+/*   background:red; */
+}
+
+#close_reviews{
+  position: absolute;
+  right: 5%;
+  top: 5%;
+  font-size: 40px;
+  color: black;
+}
+
+#review1_stars{
+  dislay: flex;
+  flex-direction: row;
+}
+
+#review1, #review2, #review3{
+  padding-bottom: 5px;
+  border-top: 2px solid black;
+}
