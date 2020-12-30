@@ -1,16 +1,13 @@
 'use strict';
 
-// include modules
 
 //Uses port 5000 if on local machine
 var PORT = process.env.PORT || 5000;
 const WebSocket = require('ws')
 const express = require('express');
-// const multer = require('multer'); //Just testing if this is necessary if site doesnt work maybe uncomment
 const bodyParser = require('body-parser');
 const fs = require('fs');
 const sql = require("sqlite3").verbose();
-// const FormData = require("form-data"); //Just testing if this is necessary if site doesnt work maybe uncomment
 const http = require('http')
 
 //yelp api and uses my yelp fusion key
@@ -20,11 +17,62 @@ const client = yelp.client('aJWwPTnE-goeaz8rXnz0yI2nsN2eweeAu28TFozM_QMrNaPeumqL
 // begin constructing the server pipeline
 const app = express();
 
+// Serve static files out of public directory
+app.use(express.static('public'));
+
+// Also serve static files out of /images
+app.use("/images",express.static('images'));
+
+// Handle GET request to base URL with no other route specified
+// by sending creator.html, the main page of the app
+app.get("/", function (request, response) {
+  response.sendFile(__dirname + '/public/index.html');
+});
+
+app.get("/voter", function (request, response) {
+  response.sendFile(__dirname + '/public/voter.html');
+});
+
+app.get("/gameData", handleGame);
+
+app.get("/start", function(req, res){
+  console.log("Game Started")
+  let startObj = {'type': 'command', 'info': "gamestart", "link": "/voter.html"}
+  broadcast(JSON.stringify(startObj));
+  res.send("/voter.html")
+});
+
+app.post("/search", express.json(), function (req, res){
+  console.log("Searching for " + req.body.term + " in " + req.body.location);
+
+  client.search({
+    term: req.body.term,
+    location: req.body.location,
+  }).then(response => {
+    // console.log(response.jsonBody.total);
+    load_restaurants(response.jsonBody.businesses)
+    res.send("Successfully added restaurants");
+  }).catch(e => {
+    console.log(e);
+  });
+});
+
+app.use(bodyParser.json());
+
+//Provides url that users can access game from, will start with waiting page
+app.get("/startNewGame", function (req, res){
+  let randomID = createId();
+  var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+  fullUrl = req.protocol + '://' + req.get('host');
+  // Code for current url from: https://stackoverflow.com/questions/42943124/how-to-get-current-url-path-in-express-with-ejs/42943283
+  console.log(fullUrl + "/waiting.html")
+  res.send(fullUrl + "/waiting.html");
+});
+
 //Web Socket Stuff
 const server = http.createServer(app);
 //Create server that allows web socket connections
 const wss = new WebSocket.Server({server});
-
 
 let currentRestaurantList;
 let clientCount = 0; //Number of players connected
@@ -35,22 +83,23 @@ let numRestaurants = 0;
 //Occurs everytime a new user connects to ws://---
 wss.on('connection', (ws) => {
   clientCount += 1;
-  console.log("a new user connected --", clientCount, "users connected");
+  console.log("A new user connected --", clientCount, " users connected");
   console.log("current Round",currentRound);
+
   ws.on('message', (message) => {
+
     let voteObj = JSON.parse(message);
 
     // Check if the message is vote object
-    if (voteObj.type == 'vote')
-    {
+    if (voteObj.type == 'vote'){
       //Must vote if ballot votes yes
       if (voteObj.ballot == "yes"){
         console.log("one user selected restaurant with id", voteObj.id);
         vote(voteObj.id); 
       }
-      // changing vote value in database anytime someone swipws (left or right)
+      // changing vote value in database anytime someone swipes (left or right)
       totalVotes++;
-      console.log("totalVotes: "+totalVotes+" clientCount " +clientCount+" numRes "+numRestaurants);
+      console.log("totalVotes: "+totalVotes+" clientCount: " +clientCount+" numRes: "+numRestaurants);
       if(totalVotes == clientCount * numRestaurants){
         currentRound++
         console.log("currentRound was incremented");
@@ -70,7 +119,7 @@ wss.on('connection', (ws) => {
   //Occurs evertime a user disconnects from ws://
   ws.on('close', ()=>{
     clientCount -= 1;
-    console.log("a user disconnected --", clientCount, "users connected");
+    console.log("A user disconnected --", clientCount, "users connected");
   });
 
   ws.send('["connected!"]')
@@ -113,9 +162,9 @@ function moveNextRound(){
   for(i = 0; i < Object.keys(currentRestaurantList).length; i++){
     restaurantDB.run(cmd,currentRestaurantList[i].id,function(err){
       if(err){
-        console.log("Update error",err.message);
+        console.log("Error Not ready for next round",err.message);
       }else{
-        console.log("Update complete");
+        console.log("Ready for next round");
       }
     });
   }  
@@ -129,9 +178,9 @@ function chooseRestaurant(){
   cmd = 'SELECT * FROM Restaurants ORDER BY round_votes DESC LIMIT 1';
   restaurantDB.get(cmd, function(err,winner){
     if(err){
-      console.log("Choose Restaurants Error", err.message);
+      console.log("Error with finding winner", err.message);
     }else{
-      console.log("winner is ",winner.name);
+      console.log("Winner is ",winner.name);
       let restInfo = winner;
       let winnerObj = {'type': 'winner', 'info': restInfo}
       broadcast(JSON.stringify(winnerObj));
@@ -193,9 +242,10 @@ function createRestaurantDB() {
   });
 }
 
+// Removes entries from previous games from database
+// Resets round back = 1, totalvotes = 0, numRestaurants = 0
 function resetGame(){
-//    Removes entries from database
-  currentRound = 1; //current round, starts at 1->3
+  currentRound = 1;
   totalVotes = 0;
   numRestaurants = 0;
   const delcmd = 'DELETE FROM Restaurants';
@@ -208,14 +258,12 @@ function resetGame(){
   });
 }
 
-
+ //Add business to database
+//put new postcard into database
 function load_restaurants(businessList){
   resetGame()
-  // console.log(businessList)
   let i = 0;
   for (i = 0; i < 16; i++) {
-    //Add business to database
-    //put new postcard into database
     let id = businessList[i].id
     let name = businessList[i].name
     let rating = businessList[i].rating
@@ -226,7 +274,6 @@ function load_restaurants(businessList){
     let round_votes = 0
     let reviews = "noreviews";
     let location = JSON.stringify(businessList[i].location);
-    console.log(businessList[i].location);
     
     cmd = "INSERT INTO Restaurants ( id,name,rating, image_url,reviews,price, location, round_votes, total_votes) VALUES (?,?,?,?,?,?,?,?,?)";
     restaurantDB.run(cmd,id,name,rating, image_url, reviews, price, location, round_votes,total_votes,  function(err) {
@@ -234,7 +281,7 @@ function load_restaurants(businessList){
         console.log("DB insert error",err.message);
         //Said next would not work here
       } else {
-        console.log("Successfully added restaurants to database")
+        // console.log("Successfully added restaurants to database")
       }
     }); // callback, shopDB.run
     
@@ -244,31 +291,32 @@ function load_restaurants(businessList){
 
 function load_reviews(businessList, i){
   
-    cmd = 'UPDATE Restaurants SET reviews=(?) WHERE id ==(?)';
-  
-    console.log(businessList[i].name + "------------------------------------------")
-    client.reviews(businessList[i].id).then(response => {
-      let rev = JSON.stringify(response.jsonBody.reviews)
-      console.log(JSON.stringify(rev));
-      restaurantDB.run(cmd,JSON.stringify(rev), businessList[i].id, function(err){
-        if(err){
-          console.log("Review Error");
-        } else{}
-      });
-    }).catch(e => {
+  cmd = 'UPDATE Restaurants SET reviews=(?) WHERE id ==(?)';
+
+  console.log(businessList[i].name + "------------------------------------------")
+  client.reviews(businessList[i].id).then(response => {
+    let rev = JSON.stringify(response.jsonBody.reviews)
+    restaurantDB.run(cmd,JSON.stringify(rev), businessList[i].id, function(err){
+      if(err){
+        console.log("Review Error");
+      } else{
+        //Review loaded successfully
+      }
     });
+  }).catch(e => {
+    //CATCH
+  });
 }
 
 
 function handleGame(request, response, next) {
-  // let r = request.query.id
-  if(currentRound == 1){//all restaurants
+  if(currentRound == 1){//Returns all restaurants
     cmd = 'SELECT * FROM Restaurants';
   }
-  if(currentRound == 2){//only restaurants with more than 0 votes
+  if(currentRound == 2){//Returns only restaurants with more than 0 votes
     cmd = "SELECT * FROM Restaurants WHERE total_votes > 0";
   }
-  if(currentRound == 3){ //most voted restaurant of remaining restaurants
+  if(currentRound == 3){ //Returns most voted restaurant of remaining restaurants
     //already taken care of during voting process
   }
   restaurantDB.all(cmd, function (err, rows) {
@@ -276,71 +324,13 @@ function handleGame(request, response, next) {
       console.log("Database reading error", err.message)
       next();
     } else {
-      // send shopping list to browser in HTTP response body as JSON
       response.json(rows);
-      currentRestaurantList = rows; //need this for when i reset votes
+      currentRestaurantList = rows; //need this for when votes are reset
       numRestaurants = Object.keys(rows).length;
-      console.log("Number of restaurants", numRestaurants)
+      console.log("Number of restaurants during this round", numRestaurants)
     }
   });
 }
-
-
-// Serve static files out of public directory
-app.use(express.static('public'));
-
-// Also serve static files out of /images
-app.use("/images",express.static('images'));
-
-// Handle GET request to base URL with no other route specified
-// by sending creator.html, the main page of the app
-app.get("/", function (request, response) {
-  response.sendFile(__dirname + '/public/index.html');
-});
-
-app.get("/voter", function (request, response) {
-  response.sendFile(__dirname + '/public/voter.html');
-});
-
-app.get("/gameData", handleGame);
-
-app.get("/start", function(req, res){
-  console.log("game started")
-  let startObj = {'type': 'command', 'info': "gamestart", "link": "/voter.html"}
-  broadcast(JSON.stringify(startObj));
-  res.send("/voter.html")
-});
-
-app.post("/search", express.json(), function (req, res){
-  console.log(req.body.term);
-  console.log(req.body.location);
-
-  client.search({
-    term: req.body.term,
-    location: req.body.location,
-  }).then(response => {
-    console.log(response.jsonBody.total);
-    load_restaurants(response.jsonBody.businesses)
-    res.send("Successfully added restaurants");
-  }).catch(e => {
-    console.log(e);
-  });
-});
-
-app.use(bodyParser.json());
-
-/*
-Provides url that users can access game from, will start with waiting page
-*/
-app.get("/startNewGame", function (req, res){
-  let randomID = createId();
-  var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
-  fullUrl = req.protocol + '://' + req.get('host');
-  // Code for current url from: https://stackoverflow.com/questions/42943124/how-to-get-current-url-path-in-express-with-ejs/42943283
-  console.log(fullUrl + "/waiting.html")
-  console.log(randomID);
-  res.send(fullUrl + "/waiting.html");
-});
 
 //for creating random id although not in use rn
 function createId() {

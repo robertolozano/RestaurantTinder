@@ -1,3 +1,6 @@
+//when window first loads, voter.html will grab all restaurants
+window.onload= getRestaurantsFromServer();
+
 //Open a web socket connection to the server
 const baseUrl = "wss://" + window.location.host; // Use wss if on glitch, ws otherwise
 const connection = new WebSocket(baseUrl);
@@ -57,11 +60,7 @@ function displayWinner(info){
   
   let header = document.getElementsByTagName("header");
   header[0].className = "shown";
-
 }
-
-//when window first loads, voter.html will grab all restaurants
-window.onload= getRestaurantsFromServer();
 
 function getRestaurantsFromServer(){
   let url = '/gameData';

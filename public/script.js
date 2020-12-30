@@ -14,12 +14,8 @@ let keywords = document.getElementById("myInput");
 
 let locations = document.getElementById("location");
 
-
-
-/*
-User clicks start new game, hide start new game,
-shows search bar, Gets randomID from server, displays link
-*/
+//User clicks start new game, hide start new game,
+//shows search bar, Gets randomID from server, displays link
 function startFunction(){
   startButton.className = "hidden";
   document.getElementById("search_bar").className = "shown";
@@ -29,12 +25,12 @@ function startFunction(){
   xhr.setRequestHeader("Content-Type", "application/json"); 
 
   xhr.onloadend = function(e) {
-    console.log(xhr.response); 
+    //xhr.response here is just the custom link that we set up
     document.getElementById("link").href = xhr.response;
     document.getElementById("link").textContent = xhr.response;
 
+    //Successfully set up new link
     if (xhr.readyState === 4 && xhr.status === 200) { 
-       console.log("JSON sent to server");
     }
   }
   xhr.send();
@@ -49,10 +45,8 @@ function searchRestaurants(){
   xhr.setRequestHeader("Content-Type", "application/json");
   
   xhr.onloadend = function(e) {
-    console.log(xhr.response);
-    
     if (xhr.readyState === 4 && xhr.status === 200) { 
-       console.log("JSON sent to server");
+       console.log("Searched for restaurants successfully");
     }
   }
   xhr.send(JSON.stringify(search));
@@ -61,14 +55,13 @@ function searchRestaurants(){
 
 //Officially starts game and redirects all players including host to voting page
 function startGame(){
-  console.log("game started")
   let xhr = new XMLHttpRequest;
   xhr.open("GET","/start", true);
   xhr.setRequestHeader("Content-Type", "application/json");
   xhr.onloadend = function(e) {
-    console.log(xhr.response);
     if (xhr.readyState === 4 && xhr.status === 200) { 
-       console.log("JSON sent to server");
+       console.log("Game Started")
+
     }
     //Redirect the web page to the page provided by the start game
     window.location.pathname = xhr.response;
@@ -76,7 +69,7 @@ function startGame(){
   xhr.send();
 }
 
-//Probably not needed
+//Will create a random unique id ** NOT IN USE **
 function createId() {
    var result           = '';
    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -88,12 +81,9 @@ function createId() {
 }
 
 
-
-
-
 // The functions below use autocomplete to fill out what the user is trying to enter
 // This code is written with the help of W3Schools code (https://www.w3schools.com/howto/howto_js_autocomplete.asp)
-//        It uses an array to search the key words entered by the user
+// It uses an array to search the key words entered by the user
 
 //Function below used from https://www.w3schools.com/howto/howto_js_autocomplete.asp
 function autocomplete(inp, arr) {
@@ -187,6 +177,7 @@ function autocomplete(inp, arr) {
     }
   }
 }
+
 /*execute a function when someone clicks in the document:*/
 document.addEventListener("click", function (e) {
     closeAllLists(e.target);
