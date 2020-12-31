@@ -272,82 +272,24 @@ function close_reviews_func() {
 }
 
 function reviewGetRating(first_star, second_star, third_star, fourth_star, fifth_star, number){
-  if(number == 0){
-    first_star.className = "far fa-star";
-    second_star.className = "far fa-star";
-    third_star.className = "far fa-star";
-    fourth_star.className = "far fa-star";
-    fifth_star.className = "far fa-star";
+  let count = 0;
+  var stars_array = [first_star, second_star, third_star, fourth_star, fifth_star];
+  console.log("The review for this res is "+number);
+  // number = 2
+  number_whole_stars = Math.floor(number); //number = 2
+  has_half_star = number % 1; //number = 0
+
+  for(i = 0; i < number_whole_stars; i++){
+    stars_array[i].className = "fas fa-star";
   }
-  if(number == 0.5){
-    first_star.className = "fas fa-star-half-alt";
-    second_star.className = "far fa-star";
-    third_star.className = "far fa-star";
-    fourth_star.className = "far fa-star";
-    fifth_star.className = "far fa-star";
+
+  for(i = number_whole_stars; i < 5; i++){
+    stars_array[i].className = "far fa-star";
   }
-  if(number == 1){
-    first_star.className = "fas fa-star";
-    second_star.className = "far fa-star";
-    third_star.className = "far fa-star";
-    fourth_star.className = "far fa-star";
-    fifth_star.className = "far fa-star";
+
+  if(has_half_star == 0.5){
+    stars_array[number_whole_stars].className = "fas fa-star-half-alt";
   }
-  if(number == 1.5){
-    first_star.className = "fas fa-star";
-    second_star.className = "fas fa-star-half-alt";
-    third_star.className = "far fa-star";
-    fourth_star.className = "far fa-star";
-    fifth_star.className = "far fa-star";
-  }
-  if(number == 2){
-    first_star.className = "fas fa-star";
-    second_star.className = "fas fa-star";
-    third_star.className = "far fa-star";
-    fourth_star.className = "far fa-star";
-    fifth_star.className = "far fa-star";
-  }
-  if(number == 2.5){
-    first_star.className = "fas fa-star";
-    second_star.className = "fas fa-star";
-    third_star.className = "fas fa-star-half-alt";
-    fourth_star.className = "far fa-star";
-    fifth_star.className = "far fa-star";
-  }
-  if(number == 3){
-    first_star.className = "fas fa-star";
-    second_star.className = "fas fa-star";
-    third_star.className = "fas fa-star";
-    fourth_star.className = "far fa-star";
-    fifth_star.className = "far fa-star";
-  }
-  if(number == 3.5){
-    first_star.className = "fas fa-star";
-    second_star.className = "fas fa-star";
-    third_star.className = "fas fa-star";
-    fourth_star.className = "fas fa-star-half-alt";
-    fifth_star.className = "far fa-star";
-  }
-  if(number == 4){
-    first_star.className = "fas fa-star";
-    second_star.className = "fas fa-star";
-    third_star.className = "fas fa-star";
-    fourth_star.className = "fas fa-star";
-    fifth_star.className = "far fa-star";
-  }
-  if(number == 4.5){
-    first_star.className = "fas fa-star";
-    second_star.className = "fas fa-star";
-    third_star.className = "fas fa-star";
-    fourth_star.className = "fas fa-star";
-    fifth_star.className = "fas fa-star-half-alt";
-  }
-  if(number == 5){   
-    first_star.className = "fas fa-star";
-    second_star.className = "fas fa-star";
-    third_star.className = "fas fa-star";
-    fourth_star.className = "fas fa-star";
-    fifth_star.className = "fas fa-star";
-  }
+
   return
 }
