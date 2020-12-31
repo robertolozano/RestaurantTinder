@@ -1,6 +1,14 @@
 //when window first loads, voter.html will grab all restaurants
 window.onload= getRestaurantsFromServer();
 
+let show_reviews = document.getElementById("business_reviews")
+show_reviews.addEventListener("click", show_reviews_func);
+
+let close_reviews = document.getElementById("close_reviews");
+close_reviews.addEventListener("click", close_reviews_func);
+
+
+
 //Open a web socket connection to the server
 // ****** Use wss if on glitch, ws otherwise ******
 const baseUrl = "ws://" + window.location.host;
@@ -129,14 +137,14 @@ mySwiper.on('slideChange', function () {
     if((mySwiper.activeIndex < mySwiper.previousIndex) && (mySwiper.activeIndex != 1)){
       sleep(200);
       // console.log("voting for "+businessGlobalList[currentRestaurant].name + " " + currentRestaurant);
-      vote(businessGlobalList[currentRestaurant].id, "no");
+      vote(businessGlobalList[currentRestaurant].id, "yes");
       getNextRestaurant();
       mySwiper.slideTo(1, 1000, true);
     }
     if((mySwiper.activeIndex > mySwiper.previousIndex) && (mySwiper.activeIndex != 1)){
       sleep(200);
       // console.log("voting for "+businessGlobalList[currentRestaurant].name + " " + currentRestaurant);
-      vote(businessGlobalList[currentRestaurant].id, "yes");
+      vote(businessGlobalList[currentRestaurant].id, "no");
       getNextRestaurant();
       mySwiper.slideTo(1, 1000, true);
     }
@@ -251,24 +259,17 @@ function sleep(milliseconds) {
   } while (currentDate - date < milliseconds);
 }
 
-
-
-let show_reviews = document.getElementById("business_reviews")
-show_reviews.addEventListener("click", show_reviews_func);
-
 function show_reviews_func(){
   document.getElementById("overlay").style.display = "block";
   document.getElementById("reviews").className = "shown";
   document.getElementById("close_reviews").className = "shown";
 }
 
-let close_reviews = document.getElementById("close_reviews");
-close_reviews.addEventListener("click", close_reviews_func);
-
 function close_reviews_func() {
   document.getElementById("reviews").className = "hidden";
   close_reviews.className = "hidden";
   document.getElementById("overlay").style.display = "none";
+  return;
 }
 
 function reviewGetRating(first_star, second_star, third_star, fourth_star, fifth_star, number){
