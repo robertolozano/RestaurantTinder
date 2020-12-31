@@ -39,7 +39,6 @@ function startFunction(){
 //Sends user search terms to server
 function searchRestaurants(){
   let search = {term: keywords.value, location: locations.value};
-  
   let xhr = new XMLHttpRequest;
   xhr.open("POST","/search", true);
   xhr.setRequestHeader("Content-Type", "application/json");
@@ -68,18 +67,6 @@ function startGame(){
   }
   xhr.send();
 }
-
-//Will create a random unique id ** NOT IN USE **
-function createId() {
-   var result           = '';
-   var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-   var charactersLength = characters.length;
-   for ( var i = 0; i < 22; i++ ) {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength));
-   }
-   return result;
-}
-
 
 // The functions below use autocomplete to fill out what the user is trying to enter
 // This code is written with the help of W3Schools code (https://www.w3schools.com/howto/howto_js_autocomplete.asp)
@@ -185,3 +172,14 @@ document.addEventListener("click", function (e) {
 }
 
 autocomplete(document.getElementById("myInput"), restaurants);
+
+//Will create a random unique id ** NOT IN USE **
+function createId() {
+  var result           = '';
+  var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  var charactersLength = characters.length;
+  for ( var i = 0; i < 22; i++ ) {
+     result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}

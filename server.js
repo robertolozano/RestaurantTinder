@@ -24,7 +24,7 @@ app.use(express.static('public'));
 app.use("/images",express.static('images'));
 
 // Handle GET request to base URL with no other route specified
-// by sending creator.html, the main page of the app
+// by sending index.html, the main page of the app
 app.get("/", function (request, response) {
   response.sendFile(__dirname + '/public/index.html');
 });
@@ -154,9 +154,8 @@ function checkWinner(id, num_clients){
   });
 }
 
-//Next round
+//Change round votes to 0 for next round
 function moveNextRound(){
-  //change round votes to 0 for next round
   let i;
   cmd = 'UPDATE Restaurants SET round_votes = 0 WHERE id == (?)';
   for(i = 0; i < Object.keys(currentRestaurantList).length; i++){
@@ -187,7 +186,6 @@ function chooseRestaurant(){
     }
   });
 }
-
 
 //Alters vote value in database then checks for winner
 function vote(id){
@@ -332,18 +330,18 @@ function handleGame(request, response, next) {
   });
 }
 
-//for creating random id although not in use rn
-function createId() {
-   var result           = '';
-   var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-   var charactersLength = characters.length;
-   for ( var i = 0; i < 22; i++ ) {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength));
-   }
-   return result;
-}
-
 // listen for requests :)
 var listener = server.listen(PORT, function () {
   console.log('Your app is listening on port ' + listener.address().port);
 });
+
+//for creating random id although not in use rn
+function createId() {
+  var result           = '';
+  var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  var charactersLength = characters.length;
+  for ( var i = 0; i < 22; i++ ) {
+     result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}

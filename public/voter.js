@@ -2,8 +2,10 @@
 window.onload= getRestaurantsFromServer();
 
 //Open a web socket connection to the server
-const baseUrl = "wss://" + window.location.host; // Use wss if on glitch, ws otherwise
+// ****** Use wss if on glitch, ws otherwise ******
+const baseUrl = "ws://" + window.location.host;
 const connection = new WebSocket(baseUrl);
+console.log(window.location.host);
 
 //What to do as soon as the connection opens
 connection.onopen = () => {
@@ -38,8 +40,8 @@ connection.onmessage = event => {
   }
 };
 
+//Info is a json file containing all info: info.name, info.id
 function displayWinner(info){
-  //Info is a json file containing all info: info.name, info.id
   console.log("We have a winner")
   console.log(info)
   let prev = document.querySelector('#prev');
@@ -54,9 +56,6 @@ function displayWinner(info){
   getRating(info.rating);
 
   document.getElementById("round1_votes").textContent = "";
-
-  // let navbar = document.getElementById("navbarID");
-  // navbar.className = "shown";
   
   let header = document.getElementsByTagName("header");
   header[0].className = "shown";
@@ -71,12 +70,12 @@ function getRestaurantsFromServer(){
 
   xhr.onloadend = function(e) {
     businessGlobalList = JSON.parse(xhr.response);
-    console.log(xhr.response);
+    console.log(JSON.parse(xhr.response));
     currentRestaurant = -1;
     getNextRestaurant();
 
     if (xhr.readyState === 4 && xhr.status === 200) { 
-       console.log("JSON sent to server");
+      //  console.log("JSON sent to server");
     }
   }
   xhr.send();
@@ -143,7 +142,7 @@ mySwiper.on('slideChange', function () {
 function getNextRestaurant(){
   try{
     currentRestaurant++;
-    console.log(currentRestaurant);
+    console.log("Currently on res# " + currentRestaurant);
     document.getElementById("business_pic").src = businessGlobalList[currentRestaurant].image_url;
     document.getElementById("business").textContent = businessGlobalList[currentRestaurant].name;
     document.getElementById("business_price").textContent = businessGlobalList[currentRestaurant].price;
@@ -157,7 +156,7 @@ function getNextRestaurant(){
     }
     
     if(businessGlobalList[currentRestaurant].reviews!="noreviews"){
-      console.log(businessGlobalList[currentRestaurant].name + " " + businessGlobalList[currentRestaurant].reviews);
+      // console.log(businessGlobalList[currentRestaurant].name + " " + businessGlobalList[currentRestaurant].reviews);
       let JSONrev = JSON.parse(businessGlobalList[currentRestaurant].reviews)
       let reviews = JSON.parse(JSONrev);
 
@@ -200,15 +199,19 @@ function getNextRestaurant(){
     return;
   }
   catch{
-    document.getElementById("business_pic").src = "https://cdn.glitch.com/aa77cb65-0ae2-4388-9521-dc70cf3b8f55%2Flogo-removebg-preview%20(1).png?v=1590852320072";
-    document.getElementById("business").textContent = "Waiting for other voters..."
-    document.getElementById("business_price").textContent = "";
-    document.getElementById("business_address").textContent = ""
-    document.getElementById("round1_votes").textContent = "";
-    // document.getElementById("business_rating").textContent = businessGlobalList[currentRestaurant].rating;
-    getRating(0);
+    finished_voting_for_round();
     return;
   }
+}
+
+function finished_voting_for_round(){
+  document.getElementById("business_pic").src = "https://cdn.glitch.com/aa77cb65-0ae2-4388-9521-dc70cf3b8f55%2Flogo-removebg-preview%20(1).png?v=1590852320072";
+  document.getElementById("business").textContent = "Waiting for other voters..."
+  document.getElementById("business_price").textContent = "";
+  document.getElementById("business_address").textContent = ""
+  document.getElementById("round1_votes").textContent = "";
+  // document.getElementById("business_rating").textContent = businessGlobalList[currentRestaurant].rating;
+  getRating(0);
 }
 
 //This function gets the correct # of stars depending on the rating

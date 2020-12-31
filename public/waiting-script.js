@@ -1,5 +1,6 @@
 //Open a web socket connection to the server
-const baseUrl = "wss://" + window.location.host; // Use wss if on glitch, ws otherwise
+//Use wss if on glitch, ws otherwise
+const baseUrl = "ws://" + window.location.host;
 console.log(baseUrl);
 const connection = new WebSocket(baseUrl);
 
@@ -8,7 +9,7 @@ connection.onopen = () => {
   connection.send(JSON.stringify({"type": "helloClient"}));
 };
 
-//connection errors
+//Connection Errors
 connection.onerror = error => {
   console.log('WebSocket error: ${error}');
 };
