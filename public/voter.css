@@ -424,3 +424,43 @@ header{
   padding-bottom: 5px;
   border-top: 2px solid black;
 }
+
+.dots {
+  background-color: #ff6b6b;
+  display: flex;
+}
+
+.dots div {
+  margin: 7px 4px 0px 3px;
+  width: 4px;
+  height: 4px;
+  background-color: black;
+  border-radius: 100%;
+  -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+  animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+}
+
+.dots .dot1 {
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
+}
+
+.dots .dot2 {
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
+}
+
+@-webkit-keyframes sk-bouncedelay {
+  0%, 80%, 100% { -webkit-transform: scale(0) }
+  50% { -webkit-transform: scale(1.0) }
+}
+
+@keyframes sk-bouncedelay {
+  0%, 80%, 100% { 
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  } 50% { 
+    -webkit-transform: scale(1.0);
+    transform: scale(1.0);
+  }
+}

@@ -1,50 +1,44 @@
 'use strict';
 
-
 //Uses port 5000 if on local machine
 var PORT = process.env.PORT || 5000;
-const WebSocket = require('ws')
+const WebSocket = require('ws');
 const express = require('express');
 const bodyParser = require('body-parser');
-const fs = require('fs');
 const sql = require("sqlite3").verbose();
-const http = require('http')
-
+const http = require('http');
 //yelp api and uses my yelp fusion key
 const yelp = require('yelp-fusion');
 const client = yelp.client('aJWwPTnE-goeaz8rXnz0yI2nsN2eweeAu28TFozM_QMrNaPeumqL9VYXaMeKE2ppSGxLcWzQthAdc9TAAzJDXteyj6msOq5ftJJwm3EwC4Yn_JV_KxSww_6-lfnEXnYx');
 
 // begin constructing the server pipeline
 const app = express();
-
 // Serve static files out of public directory
 app.use(express.static('public'));
-
-// Also serve static files out of /images
+// Serve static files out of /images
 app.use("/images",express.static('images'));
-
-// Handle GET request to base URL with no other route specified
-// by sending index.html, the main page of the app
+// Serve "/" with main page index.html
 app.get("/", function (request, response) {
   response.sendFile(__dirname + '/public/index.html');
 });
-
+// Serve "/voter" with voter page.
 app.get("/voter", function (request, response) {
   response.sendFile(__dirname + '/public/voter.html');
 });
-
-app.get("/gameData", handleGame);
-
+// Returns Restaurant List
+// getNextRestaurant() calls this from voter.js
+app.get("/handleGame", handleGame);
+// Starts game and changes view to voter page
 app.get("/start", function(req, res){
   console.log("Game Started")
   let startObj = {'type': 'command', 'info': "gamestart", "link": "/voter.html"}
   broadcast(JSON.stringify(startObj));
   res.send("/voter.html")
 });
-
+// Searches terms in YELP API
+// Called by index.html page
 app.post("/search", express.json(), function (req, res){
   console.log("Searching for " + req.body.term + " in " + req.body.location);
-
   client.search({
     term: req.body.term,
     location: req.body.location,
@@ -56,29 +50,22 @@ app.post("/search", express.json(), function (req, res){
     console.log(e);
   });
 });
-
 app.use(bodyParser.json());
 
 //Provides url that users can access game from, will start with waiting page
+// Code for current url from: https://stackoverflow.com/questions/42943124/
+// how-to-get-current-url-path-in-express-with-ejs/42943283
 app.get("/startNewGame", function (req, res){
-  let randomID = createId();
   var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
   fullUrl = req.protocol + '://' + req.get('host');
-  // Code for current url from: https://stackoverflow.com/questions/42943124/how-to-get-current-url-path-in-express-with-ejs/42943283
   console.log(fullUrl + "/waiting.html")
   res.send(fullUrl + "/waiting.html");
 });
 
-//Web Socket Stuff
+// Web Socket Code
 const server = http.createServer(app);
-//Create server that allows web socket connections
+// Create server that allows web socket connections
 const wss = new WebSocket.Server({server});
-
-let currentRestaurantList;
-let clientCount = 0; //Number of players connected
-let currentRound = 1; //current round, starts at 1->3
-let totalVotes = 0;
-let numRestaurants = 0;
 
 //Occurs everytime a new user connects to ws://---
 wss.on('connection', (ws) => {
@@ -87,15 +74,13 @@ wss.on('connection', (ws) => {
   console.log("current Round",currentRound);
 
   ws.on('message', (message) => {
-
     let voteObj = JSON.parse(message);
-
     // Check if the message is vote object
     if (voteObj.type == 'vote'){
       //Must vote if ballot votes yes
       if (voteObj.ballot == "yes"){
-        console.log("one user selected restaurant with id", voteObj.id);
-        vote(voteObj.id); 
+          console.log("one user selected restaurant with id", voteObj.id);
+          vote(voteObj.id); 
       }
       // changing vote value in database anytime someone swipes (left or right)
       totalVotes++;
@@ -134,6 +119,13 @@ function broadcast(data) {
   });
 }
 
+//Global Variables
+let currentRestaurantList;
+let clientCount = 0; //Number of players connected
+let currentRound = 1; //current round, starts at 1->3
+let totalVotes = 0;
+let numRestaurants = 0;
+
 //Checks if there is a winner
 function checkWinner(id, num_clients){
   cmd = 'SELECT * FROM Restaurants WHERE id == (?)'
@@ -141,7 +133,8 @@ function checkWinner(id, num_clients){
   restaurantDB.all(cmd,id, function (err, rows) {
     if (err) {
       console.log("Database reading error", err.message);
-    } else {
+    } 
+    else {
       // update vote count in database
       restInfo = rows[0];
       console.log("Round votes is ", restInfo.round_votes)
@@ -162,15 +155,13 @@ function moveNextRound(){
     restaurantDB.run(cmd,currentRestaurantList[i].id,function(err){
       if(err){
         console.log("Error Not ready for next round",err.message);
-      }else{
+      }
+      else{
         console.log("Ready for next round");
       }
     });
   }  
 }
-
-let mostVotes = -1;
-let mostVotedRestaurant = -1;
 
 //choose highest voted restaurant
 function chooseRestaurant(){
@@ -178,7 +169,8 @@ function chooseRestaurant(){
   restaurantDB.get(cmd, function(err,winner){
     if(err){
       console.log("Error with finding winner", err.message);
-    }else{
+    }
+    else{
       console.log("Winner is ",winner.name);
       let restInfo = winner;
       let winnerObj = {'type': 'winner', 'info': restInfo}
@@ -193,7 +185,8 @@ function vote(id){
   restaurantDB.all(cmd,id, function (err, rows1) {
     if (err) {
       console.log("Database reading error", err.message)
-    } else {
+    } 
+    else {
       // update vote count in database
       let vote_tally = rows1[0].round_votes
       let total_vote_tally = rows1[0].total_votes
@@ -204,7 +197,8 @@ function vote(id){
       restaurantDB.run(update, vote_tally, total_vote_tally, id, function(err,rows2){
         if(err){
           console.log("Database Error")
-        } else{
+        } 
+        else{
           console.log("Added a vote for ", rows1[0].name,  vote_tally)
           checkWinner(id, clientCount)
         }
@@ -224,7 +218,8 @@ restaurantDB.get(cmd, function (err, val) {
     if (val == undefined) {
         console.log("No database file - creating one");
         createRestaurantDB();
-    } else {
+    } 
+    else {
         console.log("Database file found");
     }
 });
@@ -234,7 +229,8 @@ function createRestaurantDB() {
   restaurantDB.run(cmd, function(err, val) {
     if (err) {
       console.log("Database creation failure",err.message);
-    } else {
+    } 
+    else {
       console.log("Created database");
     }
   });
@@ -250,14 +246,14 @@ function resetGame(){
   restaurantDB.run(delcmd, function(err, val) {
     if (err) {
       console.log("Database reset failure.",err.message);
-    } else {
+    }
+    else {
       console.log("Database has been reset");
     }
   });
 }
 
- //Add business to database
-//put new postcard into database
+// Add business to database
 function load_restaurants(businessList){
   resetGame()
   let i = 0;
@@ -278,7 +274,8 @@ function load_restaurants(businessList){
       if (err) {
         console.log("DB insert error",err.message);
         //Said next would not work here
-      } else {
+      }
+      else {
         // console.log("Successfully added restaurants to database")
       }
     }); // callback, shopDB.run
@@ -288,16 +285,15 @@ function load_restaurants(businessList){
 }
 
 function load_reviews(businessList, i){
-  
   cmd = 'UPDATE Restaurants SET reviews=(?) WHERE id ==(?)';
-
   console.log(businessList[i].name + "------------------------------------------")
   client.reviews(businessList[i].id).then(response => {
     let rev = JSON.stringify(response.jsonBody.reviews)
     restaurantDB.run(cmd,JSON.stringify(rev), businessList[i].id, function(err){
       if(err){
         console.log("Review Error");
-      } else{
+      } 
+      else{
         //Review loaded successfully
       }
     });
