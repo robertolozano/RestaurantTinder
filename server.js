@@ -1,5 +1,22 @@
 'use strict';
 
+// Add the Firebase products that you want to use
+var firebase = require("firebase/app");
+require("firebase/auth");
+require("firebase/firestore");
+require("firebase/database");
+var firebaseConfig = {
+  apiKey: "AIzaSyAB6_0bJialylM_TVYBoJ4AcrYlP76O3P8",
+  authDomain: "restauranttinder-ab164.firebaseapp.com",
+  projectId: "restauranttinder-ab164",
+  storageBucket: "restauranttinder-ab164.appspot.com",
+  messagingSenderId: "1014988050165",
+  appId: "1:1014988050165:web:f96a75d278696373003fbc",
+  measurementId: "G-W8FMWBWEF2"
+};
+firebase.initializeApp(firebaseConfig);
+var database = firebase.database();
+
 //Uses port 5000 if on local machine
 var PORT = process.env.PORT || 5000;
 const WebSocket = require('ws');
@@ -7,11 +24,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const sql = require("sqlite3").verbose();
 const http = require('http');
-//yelp api and uses my yelp fusion key
 const yelp = require('yelp-fusion');
 const client = yelp.client('aJWwPTnE-goeaz8rXnz0yI2nsN2eweeAu28TFozM_QMrNaPeumqL9VYXaMeKE2ppSGxLcWzQthAdc9TAAzJDXteyj6msOq5ftJJwm3EwC4Yn_JV_KxSww_6-lfnEXnYx');
 
-// begin constructing the server pipeline
 const app = express();
 // Serve static files out of public directory
 app.use(express.static('public'));
@@ -25,8 +40,7 @@ app.get("/", function (request, response) {
 app.get("/voter", function (request, response) {
   response.sendFile(__dirname + '/public/voter.html');
 });
-// Returns Restaurant List
-// getNextRestaurant() calls this from voter.js
+// Returns Restaurant List: Caller = getNextRestaurant() voter.js
 app.get("/handleGame", handleGame);
 // Starts game and changes view to voter page
 app.get("/start", function(req, res){
@@ -35,8 +49,8 @@ app.get("/start", function(req, res){
   broadcast(JSON.stringify(startObj));
   res.send("/voter.html")
 });
-// Searches terms in YELP API
-// Called by index.html page
+
+//Searches Yelp API: Caller = Index.html
 app.post("/search", express.json(), function (req, res){
   console.log("Searching for " + req.body.term + " in " + req.body.location);
   client.search({
@@ -53,8 +67,7 @@ app.post("/search", express.json(), function (req, res){
 app.use(bodyParser.json());
 
 //Provides url that users can access game from, will start with waiting page
-// Code for current url from: https://stackoverflow.com/questions/42943124/
-// how-to-get-current-url-path-in-express-with-ejs/42943283
+//From: https://stackoverflow.com/questions/42943124/how-to-get-current-url-path-in-express-with-ejs/42943283
 app.get("/startNewGame", function (req, res){
   var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
   fullUrl = req.protocol + '://' + req.get('host');
@@ -63,8 +76,8 @@ app.get("/startNewGame", function (req, res){
 });
 
 // Web Socket Code
-const server = http.createServer(app);
 // Create server that allows web socket connections
+const server = http.createServer(app);
 const wss = new WebSocket.Server({server});
 
 //Occurs everytime a new user connects to ws://---
@@ -279,7 +292,24 @@ function load_restaurants(businessList){
         // console.log("Successfully added restaurants to database")
       }
     }); // callback, shopDB.run
-    
+
+    if (price == undefined){
+      price = 0
+    }
+
+    let gameID = 0
+    database.ref('/users/'+gameID+'/'+id+'/').set({
+      id_data: id,
+      name_data: name,
+      rating_data: rating, 
+      image_url_data: image_url, 
+      reviews_data: reviews, 
+      price_data: price, 
+      location_data: location, 
+      round_votes_data:round_votes,
+      total_votes_data: total_votes
+    });
+
     load_reviews(businessList, i);
   }
 }

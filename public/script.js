@@ -11,27 +11,26 @@ let start_game = document.getElementById("start_game");
 start_game.addEventListener("click", startGame);
 
 let keywords = document.getElementById("myInput");
-
 let locations = document.getElementById("location");
 
+var database = firebase.database()
+
 //User clicks start new game, hide start new game,
-//shows search bar, Gets randomID from server, displays link
+//Shows search bar, gets randomID from server, displays link
 function startFunction(){
   startButton.className = "hidden";
   document.getElementById("search_bar").className = "shown";
   
   let xhr = new XMLHttpRequest;
   xhr.open("GET","/startNewGame");
-  xhr.setRequestHeader("Content-Type", "application/json"); 
-
+  xhr.setRequestHeader("Content-Type", "application/json");
   xhr.onloadend = function(e) {
-    //xhr.response here is just the custom link that we set up
+    //xhr.response here is the custom link that we set up
     document.getElementById("link").href = xhr.response;
     document.getElementById("link").textContent = xhr.response;
 
     //Successfully set up new link
-    if (xhr.readyState === 4 && xhr.status === 200) { 
-    }
+    if (xhr.readyState === 4 && xhr.status === 200) {}
   }
   xhr.send();
 }
@@ -42,7 +41,6 @@ function searchRestaurants(){
   let xhr = new XMLHttpRequest;
   xhr.open("POST","/search", true);
   xhr.setRequestHeader("Content-Type", "application/json");
-  
   xhr.onloadend = function(e) {
     if (xhr.readyState === 4 && xhr.status === 200) { 
        console.log("Searched for restaurants successfully");
@@ -52,7 +50,7 @@ function searchRestaurants(){
   start_game.className = start_game.className.replace("hidden", "")
 }
 
-//Officially starts game and redirects all players including host to voting page
+//Officially starts game and redirects players + host to voting page
 function startGame(){
   let xhr = new XMLHttpRequest;
   xhr.open("GET","/start", true);
@@ -60,22 +58,27 @@ function startGame(){
   xhr.onloadend = function(e) {
     if (xhr.readyState === 4 && xhr.status === 200) { 
        console.log("Game Started")
-
     }
-    //Redirect the web page to the page provided by the start game
+    //Redirect to voter page
     window.location.pathname = xhr.response;
   }
   xhr.send();
 }
 
-// The functions below use autocomplete to fill out what the user is trying to enter
-// This code is written with the help of W3Schools code (https://www.w3schools.com/howto/howto_js_autocomplete.asp)
-// It uses an array to search the key words entered by the user
+
+
+
+
+
+
+
+
+
 
 //Function below used from https://www.w3schools.com/howto/howto_js_autocomplete.asp
+//Autocomplete function takes 2 arguments,
+//Text field element and array of autocompleted values:
 function autocomplete(inp, arr) {
-  /*the autocomplete function takes two arguments,
-  the text field element and an array of possible autocompleted values:*/
   var currentFocus;
   /*execute a function when someone writes in the text field:*/
   inp.addEventListener("input", function(e) {
@@ -138,6 +141,8 @@ function autocomplete(inp, arr) {
         }
       }
   });
+
+
   function addActive(x) {
     /*a function to classify an item as "active":*/
     if (!x) return false;
