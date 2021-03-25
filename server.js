@@ -1,6 +1,6 @@
 'use strict';
 
-let gameID = 0
+let gameID = createId();
 
 // Add the Firebase products that you want to use
 var firebase = require("firebase/app");
@@ -66,6 +66,13 @@ app.post("/search", express.json(), function (req, res){
     console.log(e);
   });
 });
+
+//Searches Yelp API: Caller = Index.html
+app.post("/sendID", express.json(), function (req, res){
+  console.log("Received ID " + req.body.id);
+  gameID = req.body.id;
+});
+
 app.use(bodyParser.json());
 
 //Provides url that users can access game from, will start with waiting page
@@ -204,8 +211,21 @@ function chooseRestaurant(){
   //     broadcast(JSON.stringify(winnerObj));
   //   }
   // });
+  console.log("Begin of chooseRestaurant()---------------------------");
+  database.ref('/users/'+gameID+'/restaurants/').orderByChild('total_votes_data').limitToLast(1).once('value', (snapshot) => {
+    const winner = snapshot.val();
+    let currentKey = Object.keys(winner)[0]
+    console.log(currentKey);
+    console.log(winner);
+    console.log(winner[currentKey]);
 
-
+    let finalWinner = winner[currentKey]
+    console.log(finalWinner)
+    console.log("Winner is ", finalWinner.name_data);
+    let restInfo = finalWinner;
+    let winnerObj = {'type': 'winner', 'info': restInfo}
+    broadcast(JSON.stringify(winnerObj));
+  });
 }
 
 //Alters vote value in database then checks for winner
@@ -361,21 +381,24 @@ function handleGame(request, response, next) {
   if(currentRound == 2){//Returns only restaurants with more than 0 votes
     // cmd = "SELECT * FROM Restaurants WHERE total_votes > 0";
     console.log("start of round 2")
-    database.ref('/users/'+gameID+'/restaurants/').orderByChild('total_votes_data').startAt('1').once('value', (snapshot) => {
+    database.ref('/users/'+gameID+'/restaurants/').orderByChild('total_votes_data').startAt(1).once('value', (snapshot) => {
       const data = snapshot.val();
-      console.log(data);
+      
+      currentRestaurantList = data;
+      numRestaurants = Object.keys(data).length;
+      console.log("Number of restaurants during this round", numRestaurants)
+      console.log("This is the data!-------------------", data, "this is the end of handlegame data round1");
+      response.json(data);      
     });
   }
 
   // restaurantDB.all(cmd, function (err, rows) {
   //   if (err) {
-  //     console.log("Database reading error", err.message)
   //     next();
   //   } else {
   //     response.json(rows);
   //     currentRestaurantList = rows; //need this for when votes are reset
   //     numRestaurants = Object.keys(rows).length;
-  //     console.log("Number of restaurants during this round", numRestaurants)
   //   }
   // });
 }

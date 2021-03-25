@@ -37,6 +37,7 @@ function startFunction(){
 
 //Sends user search terms to server
 function searchRestaurants(){
+  sendID();
   let search = {term: keywords.value, location: locations.value};
   let xhr = new XMLHttpRequest;
   xhr.open("POST","/search", true);
@@ -49,6 +50,24 @@ function searchRestaurants(){
   xhr.send(JSON.stringify(search));
   start_game.className = start_game.className.replace("hidden", "")
 }
+
+
+//Sends user search terms to server
+function sendID(){
+  let id_value = createId()
+  let id = {id: id_value};
+  let xhr = new XMLHttpRequest;
+  xhr.open("POST","/sendID", true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.onloadend = function(e) {
+    if (xhr.readyState === 4 && xhr.status === 200) { 
+       console.log("Sent ID successfully");
+    }
+  }
+  xhr.send(JSON.stringify(id));
+  // start_game.className = start_game.className.replace("hidden", "")
+}
+
 
 //Officially starts game and redirects players + host to voting page
 function startGame(){

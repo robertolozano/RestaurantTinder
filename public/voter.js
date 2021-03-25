@@ -58,15 +58,15 @@ function displayWinner(info){
   let next = document.querySelector('#next');
   next.parentNode.removeChild(next);
 
-  document.getElementById("business_pic").src = info.image_url;
-  document.getElementById("business").textContent = info.name;
-  document.getElementById("business_price").textContent = info.price;
+  document.getElementById("business_pic").src = info.image_url_data;
+  document.getElementById("business").textContent = info.name_data;
+  document.getElementById("business_price").textContent = info.price_data;
   reviewGetRating(document.getElementById("first_star"),
             document.getElementById("second_star"),
             document.getElementById("third_star"),
             document.getElementById("fourth_star"),
             document.getElementById("fifth_star"),
-            info.rating);
+            info.rating_data);
 
   document.getElementById("round1_votes").textContent = "";
   
@@ -320,4 +320,16 @@ function reviewGetRating(first_star, second_star, third_star, fourth_star, fifth
   }
 
   return
+}
+
+
+//for creating random id although not in use rn
+function createId() {
+  var result           = '';
+  var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  var charactersLength = characters.length;
+  for ( var i = 0; i < 22; i++ ) {
+     result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
 }
