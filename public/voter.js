@@ -75,21 +75,17 @@ function displayWinner(info){
 }
 
 function getRestaurantsFromServer(){
-  let url = '/gameData';
-
+  let url = '/handleGame';
   let xhr = new XMLHttpRequest;
   xhr.open("GET",url);
   xhr.setRequestHeader("Content-Type", "application/json"); 
-
   xhr.onloadend = function(e) {
     businessGlobalList = JSON.parse(xhr.response);
     console.log(JSON.parse(xhr.response));
     currentRestaurant = -1;
     getNextRestaurant();
 
-    if (xhr.readyState === 4 && xhr.status === 200) { 
-      //  console.log("JSON sent to server");
-    }
+    if (xhr.readyState === 4 && xhr.status === 200) {}
   }
   xhr.send();
 }
@@ -116,8 +112,8 @@ var mySwiper = new Swiper ('.swiper-container', {
 
   // Navigation arrows
   navigation: {
-    nextEl: '.swiper-button-next',
-    prevEl: '.swiper-button-prev',
+    nextEl: '.swiper-button-prev',
+    prevEl: '.swiper-button-next',
   },
   
   scrollbar: {
@@ -133,18 +129,20 @@ let gameOver = false;
 
 //Function that detects if user has swiped on page
 mySwiper.on('slideChange', function () {
+  currentKey = Object.keys(businessGlobalList)[currentRestaurant]
+
   if(gameOver == false){
     if((mySwiper.activeIndex < mySwiper.previousIndex) && (mySwiper.activeIndex != 1)){
       sleep(200);
       // console.log("voting for "+businessGlobalList[currentRestaurant].name + " " + currentRestaurant);
-      vote(businessGlobalList[currentRestaurant].id, "yes");
+      vote(businessGlobalList[currentKey].id_data, "yes");
       getNextRestaurant();
       mySwiper.slideTo(1, 1000, true);
     }
     if((mySwiper.activeIndex > mySwiper.previousIndex) && (mySwiper.activeIndex != 1)){
       sleep(200);
       // console.log("voting for "+businessGlobalList[currentRestaurant].name + " " + currentRestaurant);
-      vote(businessGlobalList[currentRestaurant].id, "no");
+      vote(businessGlobalList[currentKey].id_data, "no");
       getNextRestaurant();
       mySwiper.slideTo(1, 1000, true);
     }
@@ -155,46 +153,75 @@ mySwiper.on('slideChange', function () {
 function getNextRestaurant(){
   try{
     currentRestaurant++;
+    currentKey = Object.keys(businessGlobalList)[currentRestaurant]
     console.log("Currently on res# " + currentRestaurant);
-    document.getElementById("business_pic").src = businessGlobalList[currentRestaurant].image_url;
-    document.getElementById("business").textContent = businessGlobalList[currentRestaurant].name;
-    document.getElementById("business_price").textContent = businessGlobalList[currentRestaurant].price;
+    console.log(businessGlobalList[currentKey])
+    document.getElementById("business_pic").src = businessGlobalList[currentKey].image_url_data;
+    document.getElementById("business").textContent = businessGlobalList[currentKey].name_data;
+    document.getElementById("business_price").textContent = businessGlobalList[currentKey].price_data;
     reviewGetRating(document.getElementById("first_star"),
                     document.getElementById("second_star"),
                     document.getElementById("third_star"),
                     document.getElementById("fourth_star"),
                     document.getElementById("fifth_star"),
-                    businessGlobalList[currentRestaurant].rating);
+                    businessGlobalList[currentKey].rating_data);
 
-    let location = JSON.parse(businessGlobalList[currentRestaurant].location);
+    let location = JSON.parse(businessGlobalList[currentKey].location_data);
     document.getElementById("business_address").textContent = location.address1 + ", " + location.city + ", " + location.state + " " + location.zip_code;
     
-    if(businessGlobalList[currentRestaurant].total_votes != 0){
-      document.getElementById("round1_votes").textContent = "Round 1 Votes: "+businessGlobalList[currentRestaurant].total_votes;
+    if(businessGlobalList[currentKey].total_votes != 0){
+      document.getElementById("round1_votes").textContent = "Round 1 Votes: "+businessGlobalList[currentKey].total_votes_data;
     }
     
-    if(businessGlobalList[currentRestaurant].reviews!="noreviews"){
-      let JSONrev = JSON.parse(businessGlobalList[currentRestaurant].reviews)
-      let reviews = JSON.parse(JSONrev);
-      let review_1_Text = reviews[0].time_created.substr(8,2) + "/" + reviews[0].time_created.substr(5,2) + "/" + reviews[0].time_created.substr(0,4);
-      let review_2_Text = reviews[1].time_created.substr(8,2) + "/" + reviews[1].time_created.substr(5,2) + "/" + reviews[1].time_created.substr(0,4);
-      let review_3_Text = reviews[2].time_created.substr(8,2) + "/" + reviews[2].time_created.substr(5,2) + "/" + reviews[2].time_created.substr(0,4);
+    console.log("made it to this part")
 
-      setUpReviews(reviews[0].text, reviews[1].text, reviews[2].text,
-                   reviews[0].rating, reviews[1].rating, reviews[2].rating,
-                   review_1_Text, review_2_Text, review_3_Text,
-                   reviews[0].user.name, reviews[1].user.name, reviews[2].user.name);
+    if(businessGlobalList[currentKey].reviews_data!="noreviews"){
+      console.log("went into first if")
+      console.log(businessGlobalList[currentKey].reviews_data)
+      review_data = businessGlobalList[currentKey].reviews_data
+      let JSONrev = JSON.parse(review_data)
+      console.log("made it past here")
+      let reviews = JSON.parse(JSONrev);
+      console.log("made it to this part")
+
+      try{
+        let review_1_Text = reviews[0].time_created.substr(8,2) + "/" + reviews[0].time_created.substr(5,2) + "/" + reviews[0].time_created.substr(0,4);
+        let review_2_Text = reviews[1].time_created.substr(8,2) + "/" + reviews[1].time_created.substr(5,2) + "/" + reviews[1].time_created.substr(0,4);
+        let review_3_Text = reviews[2].time_created.substr(8,2) + "/" + reviews[2].time_created.substr(5,2) + "/" + reviews[2].time_created.substr(0,4);
+        console.log("made it to this part")
+
+        setUpReviews(reviews[0].text, reviews[1].text, reviews[2].text,
+                    reviews[0].rating, reviews[1].rating, reviews[2].rating,
+                    review_1_Text, review_2_Text, review_3_Text,
+                    reviews[0].user.name, reviews[1].user.name, reviews[2].user.name);
+      }
+      catch{
+        let review_1_Text = ""
+        let review_2_Text = ""
+        let review_3_Text = ""
+        console.log("made it to this part")
+
+        setUpReviews("reviews[0].text", "reviews[1].text", "reviews[2].text",
+                    "reviews[0].rating", "reviews[1].rating", "reviews[2].rating",
+                    "review_1_Text", "review_2_Text", "review_3_Text",
+                    "reviews[0].user.name", "reviews[1].user.name", "reviews[2].user.name");
+      }
     }
-    if(businessGlobalList[currentRestaurant].reviews=="noreviews"){
+    console.log("made it to this part")
+
+    if(businessGlobalList[currentKey].reviews_data=="noreviews"){
       let empty_text = "";
       let review_text = "No reviews found for this restaurant";
       setUpReviews(review_text, review_text, review_text, 0, 0, 0,
                    empty_text, empty_text, empty_text,
                    empty_text, empty_text, empty_text);
     }
+
+    console.log("made it to end of try")
     return;
   }
   catch{
+    console.log("made it into catch")
     document.getElementById("business_pic").src = "https://cdn.glitch.com/aa77cb65-0ae2-4388-9521-dc70cf3b8f55%2Flogo-removebg-preview%20(1).png?v=1590852320072";
     document.getElementById("business").textContent = "Waiting for other voters..."
     document.getElementById("business_price").textContent = "";
