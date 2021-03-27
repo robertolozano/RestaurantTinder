@@ -50,4 +50,4 @@ In the 1st round all the restaurants will be shown.
 
 In the 2nd round **only** the restaurants that received votes will be shown.
 
-If no agreement has been reached by the third round, the site will first filter out the restaurants that received no votes in round 2 and then pick randomly between those remaining restaurants.
+If no agreement has been reached by the 3rd round, the site will first filter out the restaurants that received no votes in round 2 and then pick randomly between those remaining restaurants.
