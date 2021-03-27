@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8"> <!-- Binary encoding of characters -->
+    <title>Hungr</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- This will come in handy later -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css" type="text/css" charset="utf-8" />
+    <link rel="stlyesheet" href="reset.css">
+    <link rel="stylesheet" type="text/css" href="profile.css">
+    <script src="https://kit.fontawesome.com/4eb0e453ec.js" crossorigin="anonymous"></script>
+</head>
+    
+<body>
+    
+    <header>
+        <div class="navbar">
+            <div id="left_navbar">
+                <div>
+                    <h1>Hungr</h1>
+                </div>
+            
+                <div id="logo">
+                    <img id="logoPic" src="https://cdn.glitch.com/aa77cb65-0ae2-4388-9521-dc70cf3b8f55%2Flogo-removebg-preview%20(1).png?v=1590852320072">
+                </div>
+            </div>
+
+            <div id="right_navbar">
+                <div>
+                    <a href="./index.html"class="nav_button">Eat</a>
+                </div>
+                <div>
+                    <button class="nav_button" id="sign_in_button">Log In</button>
+                </div>
+            </div>
+        
+        </div>
+    </header>
+    
+    <div class="main">
+        <div id="prev_eats">
+            <p>Your Previous Eats:</p>
+        </div>
+
+        <div id="card_section">
+
+
+            <!-- <div class="card">
+                <img src="https://miro.medium.com/max/1200/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg">
+
+                <div class="card_info">
+                    <p>Open Rice Kitchen</p>
+                    <p>Stars</p>
+                    <p>Address</p>
+                </div>
+            </div>            -->
+        </div>
+    </div>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-auth.js"></script>
+
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-analytics.js"></script>
+
+    <script>
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        var firebaseConfig = {
+            apiKey: "AIzaSyAB6_0bJialylM_TVYBoJ4AcrYlP76O3P8",
+            authDomain: "restauranttinder-ab164.firebaseapp.com",
+            projectId: "restauranttinder-ab164",
+            storageBucket: "restauranttinder-ab164.appspot.com",
+            messagingSenderId: "1014988050165",
+            appId: "1:1014988050165:web:f96a75d278696373003fbc",
+            measurementId: "G-W8FMWBWEF2"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+    </script>
+
+    <script src="./profile.js"></script>  
+
+</body>
+
+</html>
