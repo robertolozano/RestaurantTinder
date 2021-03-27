@@ -17,6 +17,37 @@ body{
     align-items: center;
     padding-top: 10px;
     color: white;
+    /* background-color: green; */
+}
+
+#left_navbar{
+  /* background-color: yellow; */
+  display: flex;
+  flex-direction: row;
+  /* justify-content: flex-start; */
+  /* align-items: flex-start; */
+  width: 50%;
+  padding-left: 30px;
+}
+
+#right_navbar{
+  width: 50%;
+  /* background-color: blue; */
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  padding-right: 30px;
+}
+
+.nav_button{
+  background: none;
+  border: none;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 30px;
+  color: white;
+  margin: 0px 0px 0px 20px;
+  font-weight: 600;
+  text-decoration: none;
 }
 
 #logo{

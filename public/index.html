@@ -19,14 +19,25 @@
     
     <header>
         <div class="navbar">
-            <div>
-                <h1>Hungr</h1>
+            <div id="left_navbar">
+                <div>
+                    <h1>Hungr</h1>
+                </div>
+            
+                <div id="logo">
+                    <img id="logoPic" src="https://cdn.glitch.com/aa77cb65-0ae2-4388-9521-dc70cf3b8f55%2Flogo-removebg-preview%20(1).png?v=1590852320072">
+                </div>
             </div>
-          
-          
-            <div id="logo">
-                <img id="logoPic" src="https://cdn.glitch.com/aa77cb65-0ae2-4388-9521-dc70cf3b8f55%2Flogo-removebg-preview%20(1).png?v=1590852320072">
+
+            <div id="right_navbar">
+                <div>
+                    <a href="./index.html"class="nav_button">Eat</a>
+                </div>
+                <div>
+                    <button class="nav_button" id="sign_in_button">Log In</button>
+                </div>
             </div>
+        
         </div>
     </header>
     
@@ -65,6 +76,8 @@
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-auth.js"></script>
+
 
     <!-- TODO: Add SDKs for Firebase products that you want to use https://firebase.google.com/docs/web/setup#available-libraries -->
     <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-analytics.js"></script>
@@ -84,6 +97,7 @@
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         firebase.analytics();
+
     </script>
 
     <script src="./script.js"></script>  

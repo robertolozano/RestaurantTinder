@@ -1,6 +1,6 @@
 'use strict';
 
-let gameID = createId();
+let gameID = 0;
 
 // Add the Firebase products that you want to use
 var firebase = require("firebase/app");
@@ -27,6 +27,7 @@ const bodyParser = require('body-parser');
 const sql = require("sqlite3").verbose();
 const http = require('http');
 const yelp = require('yelp-fusion');
+const { response } = require("express");
 const client = yelp.client('aJWwPTnE-goeaz8rXnz0yI2nsN2eweeAu28TFozM_QMrNaPeumqL9VYXaMeKE2ppSGxLcWzQthAdc9TAAzJDXteyj6msOq5ftJJwm3EwC4Yn_JV_KxSww_6-lfnEXnYx');
 
 const app = express();
@@ -71,6 +72,7 @@ app.post("/search", express.json(), function (req, res){
 app.post("/sendID", express.json(), function (req, res){
   console.log("Received ID " + req.body.id);
   gameID = req.body.id;
+  res.json();
 });
 
 app.use(bodyParser.json());
@@ -167,7 +169,7 @@ function checkWinner(id, num_clients){
   //   }
   // });
 
-  var selectAll = database.ref('/users/'+gameID+'/restaurants/'+currentRestaurantList[i].id)
+  var selectAll = database.ref('/gameInstance/'+gameID+'/restaurants/'+currentRestaurantList[i].id)
   selectAll.once('value', (snapshot) => {
     const data = snapshot.val();
     console.log("This is the data!-------------------", data, "this is the end of checkwinner data");
@@ -176,21 +178,11 @@ function checkWinner(id, num_clients){
 
 //Change round votes to 0 for next round
 function moveNextRound(){
-  // cmd = 'UPDATE Restaurants SET round_votes = 0 WHERE id == (?)';
   let i;
   for(i = 0; i < Object.keys(currentRestaurantList).length; i++){
     let currentKey = Object.keys(currentRestaurantList)[i]
 
-    // restaurantD.run(cmd,currentRestaurantList[i].id,function(err){
-    //   if(err){
-    //     console.log("Error Not ready for next round",err.message);
-    //   }
-    //   else{
-    //     console.log("Ready for next round");
-    //   }
-    // });
-
-    database.ref('/users/'+gameID+'/restaurants/'+currentRestaurantList[currentKey].id_data).update({
+    database.ref('/gameInstance/'+gameID+'/restaurants/'+currentRestaurantList[currentKey].id_data).update({
       round_votes_data: 0
     });
   }  
@@ -198,21 +190,8 @@ function moveNextRound(){
 
 //choose highest voted restaurant
 function chooseRestaurant(){
-  // cmd = 'SELECT * FROM Restaurants ORDER BY round_votes DESC LIMIT 1';
-
-  // restaurantDB.get(cmd, function(err,winner){
-  //   if(err){
-  //     console.log("Error with finding winner", err.message);
-  //   }
-  //   else{
-  //     console.log("Winner is ",winner.name);
-  //     let restInfo = winner;
-  //     let winnerObj = {'type': 'winner', 'info': restInfo}
-  //     broadcast(JSON.stringify(winnerObj));
-  //   }
-  // });
   console.log("Begin of chooseRestaurant()---------------------------");
-  database.ref('/users/'+gameID+'/restaurants/').orderByChild('total_votes_data').limitToLast(1).once('value', (snapshot) => {
+  database.ref('/gameInstance/'+gameID+'/restaurants/').orderByChild('total_votes_data').limitToLast(1).once('value', (snapshot) => {
     const winner = snapshot.val();
     let currentKey = Object.keys(winner)[0]
     console.log(currentKey);
@@ -225,31 +204,18 @@ function chooseRestaurant(){
     let restInfo = finalWinner;
     let winnerObj = {'type': 'winner', 'info': restInfo}
     broadcast(JSON.stringify(winnerObj));
+
+    database.ref('/gameInstance/'+gameID).update({
+      winner: finalWinner.name_data
+    });
   });
 }
 
 //Alters vote value in database then checks for winner
 function vote(id){
   console.log("placed a vote")
-  // cmd = 'SELECT * FROM Restaurants WHERE id == (?)'
-  // restaurantDB.all(cmd,id, function (err, rows1) {
-  //   if (err) {} 
-  //   else {
-  //     // update vote count in database
-  //     let vote_tally = rows1[0].round_votes + 1
-  //     let total_vote_tally = rows1[0].total_votes + 1
-  //     let update = "UPDATE Restaurants SET round_votes=(?), total_votes=(?) WHERE id==(?)"
-  //     restaurantDB.run(update, vote_tally, total_vote_tally, id, function(err,rows2){
-  //       if(err){} 
-  //       else{
-  //         console.log("Added a vote for ", rows1[0].name,  vote_tally)
-  //         checkWinner(id, clientCount)
-  //       }
-  //     });
-  //   }
-  // });
 
-  var selectAll = database.ref('/users/'+gameID+'/restaurants/'+id)
+  var selectAll = database.ref('/gameInstance/'+gameID+'/restaurants/'+id)
   selectAll.once('value', (snapshot) => {
     const data = snapshot.val();
     console.log("This is the data!-------------------", data, "this is the end of vote data");
@@ -257,43 +223,15 @@ function vote(id){
     let round_vote_tally = data.round_votes_data + 1
     let total_vote_tally = data.total_votes_data + 1
 
-    database.ref('/users/'+gameID+'/restaurants/'+id).update({
+    database.ref('/gameInstance/'+gameID+'/restaurants/'+id).update({
       round_votes_data: round_vote_tally
     });    
-    database.ref('/users/'+gameID+'/restaurants/'+id).update({
+    database.ref('/gameInstance/'+gameID+'/restaurants/'+id).update({
       total_votes_data: total_vote_tally
     });    
   });
 }
 
-
-// creates database in file restaurants.db if it does not exists
-// const restaurantDB = new sql.Database("restaurants.db");
-
-// let cmd = " SELECT name FROM sqlite_master WHERE type='table' AND name='Restaurants' ";
-
-// restaurantDB.get(cmd, function (err, val) {
-//     console.log(err, val);
-//     if (val == undefined) {
-//         console.log("No database file - creating one");
-//         createRestaurantDB();
-//     } 
-//     else {
-//         console.log("Database file found");
-//     }
-// });
-
-function createRestaurantDB() {
-  // const cmd = 'CREATE TABLE Restaurants ( id TEXT , name TEXT, rating DECIMAL, image_url TEXT, reviews TEXT, price TEXT, location TEXT, round_votes INT, total_votes INT)';
-  // restaurantD.run(cmd, function(err, val) {
-  //   if (err) {
-  //     console.log("Database creation failure",err.message);
-  //   } 
-  //   else {
-  //     console.log("Created database");
-  //   }
-  // });
-}
 
 // Removes entries from previous games from database
 // Resets round back = 1, totalvotes = 0, numRestaurants = 0
@@ -333,7 +271,7 @@ function load_restaurants(businessList){
     }
 
     // let gameID = 0
-    database.ref('/users/'+gameID+'/restaurants/'+id+'/').set({
+    database.ref('/gameInstance/'+gameID+'/restaurants/'+id+'/').set({
       id_data: id,
       name_data: name,
       rating_data: rating, 
@@ -355,7 +293,7 @@ function load_reviews(businessList, i){
   client.reviews(businessList[i].id).then(response => {
     let rev = JSON.stringify(response.jsonBody.reviews)
 
-    database.ref('/users/'+gameID+'/restaurants/'+businessList[i].id).update({
+    database.ref('/gameInstance/'+gameID+'/restaurants/'+businessList[i].id).update({
       reviews_data: JSON.stringify(rev)
     });
 
@@ -366,8 +304,7 @@ function load_reviews(businessList, i){
 
 function handleGame(request, response, next) {
   if(currentRound == 1){//Returns all restaurants
-    // cmd = 'SELECT * FROM Restaurants';
-    var selectAll = database.ref('/users/'+gameID+'/restaurants')
+    var selectAll = database.ref('/gameInstance/'+gameID+'/restaurants')
     selectAll.once('value', (snapshot) => {
       const data = snapshot.val();
 
@@ -379,9 +316,8 @@ function handleGame(request, response, next) {
     });
   }
   if(currentRound == 2){//Returns only restaurants with more than 0 votes
-    // cmd = "SELECT * FROM Restaurants WHERE total_votes > 0";
     console.log("start of round 2")
-    database.ref('/users/'+gameID+'/restaurants/').orderByChild('total_votes_data').startAt(1).once('value', (snapshot) => {
+    database.ref('/gameInstance/'+gameID+'/restaurants/').orderByChild('total_votes_data').startAt(1).once('value', (snapshot) => {
       const data = snapshot.val();
       
       currentRestaurantList = data;
@@ -391,16 +327,6 @@ function handleGame(request, response, next) {
       response.json(data);      
     });
   }
-
-  // restaurantDB.all(cmd, function (err, rows) {
-  //   if (err) {
-  //     next();
-  //   } else {
-  //     response.json(rows);
-  //     currentRestaurantList = rows; //need this for when votes are reset
-  //     numRestaurants = Object.keys(rows).length;
-  //   }
-  // });
 }
 
 // listen for requests :)

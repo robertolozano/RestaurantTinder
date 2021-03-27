@@ -1,3 +1,7 @@
+window.onload = setUp();
+
+var database = firebase.database();
+
 // List of keywords to search a restaurant
 let restaurants = ["Afghan", "African", "Arabian", "Argentine", "Armenian", "Asian Fusion", "Australian", "Austrian", "Bangladeshi", "Basque", "Barbeque", "Belgian", "Brasseries", "Brazilian", "Breakfast & Brunch", "British", "Buffets", "Bulgarian", "Burgers", "Burmese", "Cafes", "Cafeteria", "Cajun/Creole", "Cambodian", "Caribbean", "Catalan", "Cheesesteaks", "Chicken Wings", "Chicken Shop", "Chinese", "Comfort Food", "Creperies", "Cuban", "Czech", "Delis", "Diners", "Dinner Theater", "Eritrean", "Ethiopian", "Filipino", "Fish & Chips", "Fondue", "Food Court", "Food Stands", "French", "Game Meat", "Gastropubs", "Georgian", "German", "Gluten-Free", "Greek", "Guamanian", "Halal", "Hawaiian", "Himalayan/Nepalese", "Hong Kong Style Cafe", "Honduran", "Hot Dogs", "Fast Food", "Hot Pot", "Hungarian", "Iberian", "Indonesian", "Indian", "Irish", "Italian", "Japanese", "Kebab", "Korean", "Kosher", "Laotian", "Latin American", "Malaysian", "Mediterranean", "Mexican", "Middle Eastern", "Modern European", "Mongolian", "Moroccan", "American (New)", "New Mexican Cuisine", "Nicaraguan", "Noodles", "Pakistani", "Pan Asian", "Persian/Iranian", "Peruvian", "Pizza", "Polish", "Polynesian", "Pop-Up Restaurants", "Portuguese", "Poutineries", "Live/Raw Food", "Russian", "Salad", "Sandwiches", "Scandinavian", "Scottish", "Seafood", "Singaporean", "Slovakian", "Somali", "Soul Food", "Soup", "Southern", "Spanish", "Sri Lankan", "Steakhouses", "Supper Clubs", "Sushi Bars", "Syrian", "Taiwanese", "Tapas Bars", "Tapas/Small Plates", "Tex-Mex", "Thai", "American (Traditional)", "Turkish", "Ukrainian", "Uzbek", "Vegan", "Vegetarian", "Vietnamese", "Waffles", "Wraps"]
 
@@ -12,6 +16,9 @@ start_game.addEventListener("click", startGame);
 
 let keywords = document.getElementById("myInput");
 let locations = document.getElementById("location");
+
+let signInButton = document.getElementById("sign_in_button");
+signInButton.addEventListener("click", signIn);
 
 var database = firebase.database()
 
@@ -60,12 +67,27 @@ function sendID(){
   xhr.open("POST","/sendID", true);
   xhr.setRequestHeader("Content-Type", "application/json");
   xhr.onloadend = function(e) {
-    if (xhr.readyState === 4 && xhr.status === 200) { 
-       console.log("Sent ID successfully");
-    }
+    // if (xhr.status === 200) { 
+    console.log("Sent ID successfully");
+
+
+    console.log("sending hte user_data")
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        console.log("sending the users email")
+        database.ref('/gameInstance/'+id_value+"/users").update({
+          user_data: user.email
+        });
+      } else {
+        console.log("sending guest")
+        database.ref('/gameInstance/'+id_value+"/users").update({
+          user_data: "guest"
+        });
+      }
+    });
+    // }
   }
   xhr.send(JSON.stringify(id));
-  // start_game.className = start_game.className.replace("hidden", "")
 }
 
 
@@ -206,4 +228,54 @@ function createId() {
      result += characters.charAt(Math.floor(Math.random() * charactersLength));
   }
   return result;
+}
+
+
+ //Authentication
+ var provider = new firebase.auth.GoogleAuthProvider();
+
+function signIn(){
+  console.log("pressed sign in button")
+
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      // User is signed in.
+      console.log("user " + user.displayName + " is already signed in");
+    } else {
+      firebase.auth().signInWithPopup(provider).then((result) => {
+          /** @type {firebase.auth.OAuthCredential} */
+          var credential = result.credential;
+          // This gives you a Google Access Token. You can use it to access the Google API.
+          var token = credential.accessToken;
+          // The signed-in user info.
+          var user = result.user;
+          console.log(user)
+
+          database.ref('/users/').update({
+            userID: user.email
+          });
+      }).catch((error) => {
+          // Handle Errors here.
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          // The email of the user's account used.
+          var email = error.email;
+          // The firebase.auth.AuthCredential type that was used.
+          var credential = error.credential;
+      });
+    }
+  });
+}
+
+function setUp(){
+  let signInButton = document.getElementById("sign_in_button");
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      console.log("user already signed in should be changed to profile")
+      signInButton.textContent = "Profile"
+    } else {
+      console.log('user not signed in change to log in')
+      signInButton.textContent = "Log In"
+    }
+  });
 }
