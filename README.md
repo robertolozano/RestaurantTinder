@@ -1,10 +1,6 @@
 # Hungr
 
-  
-
 ## How to build
-
-  
 
 Clone repository and run
 
