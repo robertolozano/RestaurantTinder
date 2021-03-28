@@ -1,6 +1,6 @@
 'use strict';
 
-let gameID = 0;
+let gameID = 0; // Placeholder value that will be replaced by client
 
 // Add the Firebase products that you want to use
 var firebase = require("firebase/app");
