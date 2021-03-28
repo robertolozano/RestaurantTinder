@@ -43,6 +43,9 @@ app.get("/", function (request, response) {
 app.get("/voter", function (request, response) {
   response.sendFile(__dirname + '/public/voter.html');
 });
+app.get("/profile", function (request, response) {
+  response.sendFile(__dirname + '/public/profile.html');
+});
 // Returns Restaurant List: Caller = getNextRestaurant() voter.js
 app.get("/handleGame", handleGame);
 // Starts game and changes view to voter page
