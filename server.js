@@ -78,6 +78,7 @@ app.post("/sendID", express.json(), function (req, res){
   res.json();
 });
 
+// FIXME: Fix deprecated bodyParser
 app.use(bodyParser.json());
 
 //Provides url that users can access game from, will start with waiting page
