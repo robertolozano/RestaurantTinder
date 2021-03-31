@@ -95,7 +95,7 @@ app.get("/startNewGame", function (req, res){
 const server = http.createServer(app);
 const wss = new WebSocket.Server({server});
 
-//Occurs everytime a new user connects to ws://---
+//Occurs everytime a new user connects to ws://
 wss.on('connection', (ws) => {
   clientCount += 1;
   console.log("A new user connected --", clientCount, " users connected");
