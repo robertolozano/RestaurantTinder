@@ -42,7 +42,7 @@ Built with the following Technlogies:
 3.  Send link to friends and hit "begin" once everyone is ready.
 4. Swipe in the tradition tinder-style method or press the button on the sides to indicate if you like/dislike a restaurant.
 ### Game rules
-Throughout each round, if any restaurant receives a like from all of the users, then it will automatically be chosen as the winner. 
+Throughout each round, if any restaurant receives a vote from all of the users, then it will automatically be chosen as the winner. 
 There is no limit on how many restaurants a user can like. 
 Therefore the game is based on a restaurant receiving a 100% consensus however the game will filter out restaurants as you go so even if the game has to pick for you, it will pick among those that were generally liked amongst the group.
 
