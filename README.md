@@ -39,7 +39,7 @@ Built with the following Technlogies:
 ## How to play
 1. Enter keyword(s) and location. 
 2. Press the "Eat!" button.
-3.  Send link to friends and hit "begin" once everyone is ready.
+3. Send link to friends and hit "begin" once everyone is ready.
 4. Swipe in the tradition tinder-style method or press the button on the sides to indicate if you like/dislike a restaurant.
 ### Game rules
 Throughout each round, if any restaurant receives a vote from all of the users, then it will automatically be chosen as the winner. 
