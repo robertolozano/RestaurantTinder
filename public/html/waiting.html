@@ -10,8 +10,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css" type="text/css" charset="utf-8" />
-    <link rel="stlyesheet" href="reset.css">
-    <link rel="stylesheet" type="text/css" href="index.css">
+    <link rel="stlyesheet" href="../css/reset.css">
+    <link rel="stylesheet" type="text/css" href="../css/waiting.css">
     <script src="https://kit.fontawesome.com/4eb0e453ec.js" crossorigin="anonymous"></script>
 </head>
     
@@ -31,20 +31,31 @@
         </div>
     </header>
     
-    <div id="waiting" class="main">
-        Waiting for game to begin 
-        <div class="dots">
-          <div class="dot1">
-          </div>
-          <div class="dot2">
-          </div>
-          <div class="dot3">
-          </div>
+    <div class="main">
+        <div id="waiting">
+            <h2 class="main_header">Waiting for game to begin<h2> 
+            <div class="dots">
+            <div class="dot1"></div>
+            <div class="dot2"></div>
+            <div class="dot3"></div>
+            </div>
         </div>
+
+
+        <h2>Invite friends with this link</p>
+
+        <div id="link_div">
+            <p>Invite Link: <a id="link" href=""></a></p>
+        </div>
+
+        <p id="clientCount"># users in waiting room</p>
+
+        <button id="begin_button">Begin</button>
+
     </div>
     
   
-    <script src="./waiting-script.js"></script>  
+    <script src="../js/waiting-script.js"></script>  
 </body>
 
 </html>

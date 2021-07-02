@@ -1,0 +1,176 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Jost', sans-serif;
+}
+
+body{
+  background-color: #77B1E7;
+  background-color: rgb(239, 245, 255);
+
+}
+
+button{
+  cursor: pointer;
+}
+
+.navbar{
+    font-family: 'Jost', sans-serif;
+    font-size: 14px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding-top: 10px;
+    color: white;
+    background-color: #8ac1f4;
+    background-color: #77B1E7;
+}
+
+#left_navbar{
+  /* background-color: yellow; */
+  display: flex;
+  flex-direction: row;
+  width: 50%;
+  padding-left: 30px;
+}
+
+#right_navbar{
+  width: 50%;
+  /* background-color: blue; */
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  padding-right: 30px;
+}
+
+.nav_button{
+  background: none;
+  border: none;
+  font-family: 'Jost', sans-serif;
+  font-size: 30px;
+  color: white;
+  margin: 0px 0px 0px 20px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+#logo{
+    display: flex;
+    max-height: auto;
+    max-width: 35px;
+    padding-left: 10px;
+}
+
+#logoPic{
+    display: flex;
+    height: 100%;
+    width: 100%;
+}
+
+#link{
+    font-size: 15px;
+}
+
+
+.main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    background-color: rgb(239, 245, 255);
+}
+
+#waiting{
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0px 0px 0px;
+    font-size: 25px;
+  }
+  
+
+.main_header{
+  font-family: 'Jost', sans-serif;
+}
+
+.hidden{
+    opacity: 0;
+    z-index: -1;
+}
+
+.shown{
+    opacity: 100;
+    z-index: 1;
+}
+
+/* Tablet------------------------------------------------------ */
+@media (min-width: 600px) and (max-width: 768px){
+  .navbar{
+      font-size: 20px;
+  }
+  #logo{
+      max-width: 48px;
+  }
+  #link{
+    font-size: 17px;
+  }
+}
+
+
+/* Desktop------------------------------------------------- */
+@media (min-width: 768px){
+  .navbar{
+    font-size: 24px;
+  }
+  #logo{
+    max-width: 54px;
+  }
+  #link{
+    font-size: 19px;
+  }
+}
+
+
+
+/* Dot Animation ------------------------------ */
+.dots {
+  display: flex;
+}
+
+.dots div {
+  margin: 7px 4px 0px 3px;
+  width: 10px;
+  height: 10px;
+  background-color: black;
+  border-radius: 100%;
+  -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+  animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+}
+
+.dots .dot1 {
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
+}
+
+.dots .dot2 {
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
+}
+
+@-webkit-keyframes sk-bouncedelay {
+  0%, 80%, 100% { -webkit-transform: scale(0) }
+  50% { -webkit-transform: scale(1.0) }
+}
+
+@keyframes sk-bouncedelay {
+  0%, 80%, 100% { 
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  } 50% { 
+    -webkit-transform: scale(1.0);
+    transform: scale(1.0);
+  }
+}

@@ -37,24 +37,44 @@ app.use(express.static('public'));
 app.use("/images",express.static('images'));
 // Serve "/" with main page index.html
 app.get("/", function (request, response) {
-  response.sendFile(__dirname + '/public/index.html');
+  response.sendFile(__dirname + '/public/html/landing.html');
+});
+app.get("/index", function (request, response) {
+  response.sendFile(__dirname + '/public/html/index.html');
 });
 // Serve "/voter" with voter page.
 app.get("/voter", function (request, response) {
-  response.sendFile(__dirname + '/public/voter.html');
+  response.sendFile(__dirname + '/public/html/voter.html');
 });
 app.get("/profile", function (request, response) {
-  response.sendFile(__dirname + '/public/profile.html');
+  response.sendFile(__dirname + '/public/html/profile.html');
+});
+app.get("/waiting", function (request, response) {
+  response.sendFile(__dirname + '/public/html/waiting.html');
 });
 // Returns Restaurant List: Caller = getNextRestaurant() voter.js
 app.get("/handleGame", handleGame);
+
+
 // Starts game and changes view to voter page
-app.get("/start", function(req, res){
+app.post("/start", express.json(), function(req, res){
   console.log("Game Started")
+  console.log(req.body);
+  load_restaurants(req.body);
   let startObj = {'type': 'command', 'info': "gamestart", "link": "/voter.html"}
   broadcast(JSON.stringify(startObj));
-  res.send("/voter.html")
+  // res.send("/voter")
+  res.send("/waiting");
 });
+
+// Starts game and changes view to voter page
+app.post("/begin", express.json(), function(req, res){
+  console.log("Game Started")
+  let startObj = {'type': 'command', 'info': "gamestart", "link": "/voter"}
+  broadcast(JSON.stringify(startObj));
+  res.send("/voter")
+});
+
 
 //Searches Yelp API: Caller = Index.html
 app.post("/search", express.json(), function (req, res){
@@ -63,9 +83,15 @@ app.post("/search", express.json(), function (req, res){
     term: req.body.term,
     location: req.body.location,
   }).then(response => {
-    // console.log(response.jsonBody.total);
-    load_restaurants(response.jsonBody.businesses)
-    res.send("Successfully added restaurants");
+    console.log(response.jsonBody);
+
+    // load_restaurants(response.jsonBody.businesses)
+    let businessList = response.jsonBody.businesses;
+    for(let i = 0; i < businessList.length; i++){
+      console.log(businessList[i].name + "------------------------------------------")
+    }
+
+    res.send(response.jsonBody);
   }).catch(e => {
     console.log(e);
   });
@@ -86,8 +112,8 @@ app.use(bodyParser.json());
 app.get("/startNewGame", function (req, res){
   var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
   fullUrl = req.protocol + '://' + req.get('host');
-  console.log(fullUrl + "/waiting.html")
-  res.send(fullUrl + "/waiting.html");
+  console.log(fullUrl + "/waiting")
+  res.send(fullUrl + "/waiting");
 });
 
 // Web Socket Code
@@ -98,6 +124,8 @@ const wss = new WebSocket.Server({server});
 //Occurs everytime a new user connects to ws://
 wss.on('connection', (ws) => {
   clientCount += 1;
+  let newClientCount = {'type': 'newClientCount', 'clientCount': clientCount};
+  broadcast(JSON.stringify(newClientCount));
   console.log("A new user connected --", clientCount, " users connected");
   console.log("current Round",currentRound);
 
@@ -132,6 +160,8 @@ wss.on('connection', (ws) => {
   //Occurs evertime a user disconnects from ws://
   ws.on('close', ()=>{
     clientCount -= 1;
+    let newClientCount = {'type': 'newClientCount', 'clientCount': clientCount};
+    broadcast(JSON.stringify(newClientCount));  
     console.log("A user disconnected --", clientCount, "users connected");
   });
 
@@ -146,6 +176,8 @@ function broadcast(data) {
     }
   });
 }
+
+
 
 //Global Variables
 let currentRestaurantList;
@@ -258,7 +290,8 @@ function resetGame(){
 function load_restaurants(businessList){
   resetGame()
   let i = 0;
-  for (i = 0; i < 16; i++) {
+  // for (i = 0; i < 16; i++) {
+  for(i = 0; i < businessList.length; i++){
     let id = businessList[i].id
     let name = businessList[i].name
     let rating = businessList[i].rating
@@ -338,7 +371,7 @@ var listener = server.listen(PORT, function () {
   console.log('Your app is listening on port ' + listener.address().port);
 });
 
-//for creating random id although not in use rn
+// Creates randomID
 function createId() {
   var result           = '';
   var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
