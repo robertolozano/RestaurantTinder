@@ -1,6 +1,6 @@
 //Open a web socket connection to the server
 //Use wss if on glitch, ws otherwise
-const baseUrl = "ws://" + window.location.host;
+const baseUrl = "wss://" + window.location.host;
 console.log(baseUrl);
 const connection = new WebSocket(baseUrl);
 
