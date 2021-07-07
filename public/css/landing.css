@@ -20,11 +20,9 @@ body{
     padding-top: 10px;
     color: white;
     margin: 0px 0px 0px 0px;
-    /* background-color: green; */
 }
 
 #left_navbar{
-  /* background-color: yellow; */
   display: flex;
   flex-direction: row;
   width: 50%;
@@ -33,7 +31,6 @@ body{
 
 #right_navbar{
   width: 50%;
-  /* background-color: blue; */
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
@@ -73,19 +70,29 @@ body{
     width: 100%;
 }
 
+
+
+/* main section --------------- */
+
 #main{
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
+
+/* hero section --------------- */
 
 #hero_section{
     width: 100%;
-    height: 600px;
+    width: 95%;
+    height: 30vw;
     color: white;
     display: grid;
     grid-template-columns: 60% 40%;
     grid-template-rows: 100%;
     margin: 60px 0px 0px 0px;
-    /* background-color: red; */
 }
 
 #hero_text_div{
@@ -155,12 +162,23 @@ body{
     transition-delay: 0s;
 }
 
+
+
+
+
+
+
+
+
+
+
+
 #second_section{
     display: grid;
     grid-template-columns: 40% 60%;
     grid-template-rows: 100%;
     height: 500px;
-    width: 100%;
+    width: 95%;
     margin: 140px 0px 0px 0px;
 }
 
@@ -191,7 +209,6 @@ body{
 #third_section{
     width: 100%;
     height: 200px;
-    /* background-color: red; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -211,6 +228,10 @@ body{
 .button-wrapper{
     width: 200px;
     height: 100px;
+
+    width: 16vh;
+    height: 8vw;
+
     position: relative;
     justify-self: center;
     display: flex;
@@ -263,11 +284,12 @@ body{
     cursor: pointer;
 }
 
-@media only screen and (max-width: 600px) {
-    body {
-    }
+@media only screen and (max-width: 768px) {
     .navbar{
         font-size: 10px;
+    }
+    #logoPic{
+        width: 40px;;
     }
     #left_navbar,
     #right_navbar,
@@ -279,23 +301,21 @@ body{
         font-size: 15px;
     }
     #hero_text{
-        font-size: 32px;
-    }
-    #background{
-        height: 42px;
+        font-size: 25px;
     }
     #hero_section{
-        /* background-color: #657b8f; */
         height: 300px;
+    }
+    #background{
+        height: 32px;
     }
     .background_short{
         width: 0px;
         transition: all 1s ease;
         transition-delay: 0s;
     }
-
     .background_long{
-        width: 175px;
+        width: 135px;
         transition: all 1s ease;
         transition-delay: 0s;
     }
@@ -304,20 +324,111 @@ body{
         align-self: center;
     }
     .button-wrapper{
-        width: 150px;
-        height: 80px;
+        width: 10vh;
+        height: 10vw;
     }
     .button-project-link{
-        font-size: 30px;
+        font-size: 25px;
     }
-    #logoPic{
-        width: 40px;;
+    #second_section{
+        margin: 0px;
+        height: 60vw;
+        width: 90%;
+
+        grid-template-columns: 45% 55%;
+
     }
     #second_image{
         width: 300px;
         height: 300px;
+        justify-self: center;
+        align-self: center;
+
     }
     #second_text{
         font-size: 30px;
+    }
+    #third_section{
+        font-size: 15px;
+        width: 90%;
+        text-align: center;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+@media only screen and (max-width: 480px) {
+    .navbar{
+        font-size: 10px;
+    }
+    #logoPic{
+        width: 40px;;
+    }
+    #left_navbar,
+    #right_navbar,
+    .nav_button,
+    #hero_text_div{
+        font-size: 25px;
+    }
+    #left_navbar{
+        font-size: 15px;
+    }
+    #hero_text{
+        font-size: 20px;
+    }
+    #hero_section{
+        height: 300px;
+    }
+    #background{
+        height: 25px;
+    }
+    .background_short{
+        width: 0px;
+        transition: all 1s ease;
+        transition-delay: 0s;
+    }
+    .background_long{
+        width: 110px;
+        transition: all 1s ease;
+        transition-delay: 0s;
+    }
+    #hero_image{
+        height: 80%;
+        align-self: center;
+    }
+    .button-wrapper{
+        width: 10vh;
+        height: 10vw;
+    }
+    .button-project-link{
+        font-size: 15px;
+    }
+    #second_section{
+        margin: 0px;
+        height: 60vw;
+        width: 90%;
+        grid-template-columns: 45% 55%;
+    }
+    #second_image{
+        width: 20vh;
+        height: 40vw;
+        justify-self: center;
+        align-self: center;
+    }
+    #second_text{
+        font-size: 20px;
+    }
+    #third_section{
+        font-size: 10px;
+        width: 90%;
+        text-align: center;
     }
 }
