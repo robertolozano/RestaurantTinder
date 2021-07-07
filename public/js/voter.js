@@ -11,7 +11,7 @@ close_reviews.addEventListener("click", close_reviews_func);
 
 //Open a web socket connection to the server
 // ****** Use wss if on glitch, ws otherwise ******
-const baseUrl = "ws://" + window.location.host;
+const baseUrl = "wss://" + window.location.host;
 const connection = new WebSocket(baseUrl);
 console.log(window.location.host);
 
