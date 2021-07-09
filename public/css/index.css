@@ -263,7 +263,7 @@ button{
   /* box-sizing: border-box; */
   width: 200px;
   width: 300px;
-  height: 25vw;
+  height: 50vh;
   border-radius:50px;
   flex: 0 0 auto;
   margin-right: 3px;
