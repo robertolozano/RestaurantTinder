@@ -150,7 +150,7 @@ function displaySearchResults(restaurants, flag){
   star5.className = "far fa-star";
 
   business_address = document.createElement("p");
-  node3 = document.createTextNode(`${restaurants.location.address1}, ${restaurants.location.city}`);
+  node3 = document.createTextNode(`${restaurants.location.address1}, ${restaurants.location.city}, ${restaurants.location.state}`);
   business_address.appendChild(node3);
   business_address.className = "business_address";
 
