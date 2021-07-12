@@ -32,11 +32,6 @@ signInButton.addEventListener("click", signIn);
 
 var database = firebase.database();
 
-// TODO: MUST REPURPOSE! STARTGAME BUTTON WAS REMOVED!
-//User clicks start new game, hide start new game,
-//Shows search bar, gets randomID from server, displays link
-
-
 function startFunction(){
   let xhr = new XMLHttpRequest;
   xhr.open("GET","/startNewGame");
@@ -82,17 +77,22 @@ function searchRestaurants(){
 
 //Officially starts game and redirects players + host to voting page
 function startGame(){
-  let xhr = new XMLHttpRequest;
-  xhr.open("POST","/start", true);
-  xhr.setRequestHeader("Content-Type", "application/json");
-  xhr.onloadend = function(e) {
-    if (xhr.readyState === 4 && xhr.status === 200) { 
-       console.log("Game Started");
-    }
-    //Redirect to voter page
-    window.location.pathname = xhr.response;
-  };
-  xhr.send(JSON.stringify(restaurantList));
+  if(restaurantList.length > 0){
+    let xhr = new XMLHttpRequest;
+    xhr.open("POST","/start", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onloadend = function(e) {
+      if (xhr.readyState === 4 && xhr.status === 200) { 
+        console.log("Game Started");
+      }
+      //Redirect to voter page
+      window.location.pathname = xhr.response;
+    };
+    xhr.send(JSON.stringify(restaurantList));
+  }
+  else{
+    alert("Must have at least one restaurant to begin");
+  }
 }
 
 restaurantList = [];
