@@ -69,12 +69,12 @@ button{
 
 .slide_animation{
   animation: slide_animation;
-  animation-duration: 1.5s;
+  animation-duration: 0.7s;
   animation-timing-function: ease-in-out;
 }
 
 @keyframes slide_animation{
-  0%{ opacity: 0; transform: translate(200px, 0px);}
+  0%{ opacity: 0; transform: translate(0px, -500px);}
   100%{ opacity: 100%; transform: translate(0px, 0px);}
 }
 
