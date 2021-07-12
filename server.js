@@ -345,6 +345,10 @@ function handleGame(request, response, next) {
     selectAll.once('value', (snapshot) => {
       const data = snapshot.val();
 
+      if(data == null){
+        response.json()
+      }
+
       currentRestaurantList = data;
       numRestaurants = Object.keys(data).length;
       console.log("Number of restaurants during this round", numRestaurants)

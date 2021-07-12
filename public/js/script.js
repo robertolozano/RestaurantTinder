@@ -99,7 +99,7 @@ restaurantList = [];
 
 function displaySearchResults(restaurants, flag){
   slide = document.createElement('div');
-  slide.className = "slide2";
+  slide.className = "slide2 slide_animation";
 
   slide_cover = document.createElement('div');
   slide_cover.className = "slide_cover";
