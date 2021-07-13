@@ -61,9 +61,15 @@ function displayWinner(info){
     if (user) {
       console.log(user);
       console.log("sending the users email");
-      database.ref('/users/'+user.email+"/prev_restaurants").update({
+      
+      database.ref('/users/'+user.uid+"/prev_restaurants").update({
         restaurant_info: info
       });
+
+      database.ref('/users/'+user.uid).update({
+        user_email: user.email
+      });
+
     } else {
       // console.log("sending guest");
       // database.ref('/gameInstance/'+id_value+"/users").update({
