@@ -4,13 +4,29 @@ window.onload = setUp2();
 let signInButton = document.getElementById("sign_in_button");
 signInButton.addEventListener("click", signIn);
 
+firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+        console.log("User is signed in should retrieve cards");
+        // database.ref('/gameInstance/'+id_value+"/users").update({
+        // user_data: user.email
+        // });
+    } else {
+        console.log("no user signed in");
+        // database.ref('/gameInstance/'+id_value+"/users").update({
+        // user_data: "guest"
+        // });
+    }
+});
+
 function setUp2(imageurl, index, name) {
+    imageurl = "https://miro.medium.com/max/1200/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg";
+
     card = document.createElement('div');
     card.className = "card";
           
     restaurant_image = document.createElement('img');
     // restaurant_image.id = "restaurant_image_" + index;
-    restaurant_image.src = "https://miro.medium.com/max/1200/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg"
+    restaurant_image.src = imageurl;
   
     card_info_div = document.createElement('div');
     card_info_div.className = "card_info";
@@ -43,10 +59,8 @@ function setUp2(imageurl, index, name) {
 
 function signIn(){
     console.log("pressed sign in button")
-
     firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-            // User is signed in.
+        if (user) { // User is signed in.
             console.log("user " + user.displayName + " is already signed in");
             window.location.href = "./profile"
 
@@ -56,7 +70,6 @@ function signIn(){
                 var credential = result.credential;
                 // This gives you a Google Access Token. You can use it to access the Google API.
                 var token = credential.accessToken;
-                // The signed-in user info.
                 var user = result.user;
                 console.log(user)
 
@@ -64,12 +77,9 @@ function signIn(){
                     userID: user.email
                 });
             }).catch((error) => {
-                // Handle Errors here.
                 var errorCode = error.code;
                 var errorMessage = error.message;
-                // The email of the user's account used.
                 var email = error.email;
-                // The firebase.auth.AuthCredential type that was used.
                 var credential = error.credential;
             });
         }

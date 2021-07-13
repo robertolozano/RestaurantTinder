@@ -51,7 +51,25 @@ connection.onmessage = event => {
 //Info is a json file containing all info: info.name, info.id
 function displayWinner(info){
   console.log("We have a winner")
+
   console.log(info)
+
+  // FIXME
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      console.log("sending the users email");
+      database.ref('/users/'+user.email+"/prev_restaurants").update({
+        restaurant_info: info
+      });
+    } else {
+      // console.log("sending guest");
+      // database.ref('/gameInstance/'+id_value+"/users").update({
+      //   user_data: "guest"
+      // });
+    }
+  });
+  
+
   let prev = document.querySelector('#prev');
   prev.parentNode.removeChild(prev);
 
