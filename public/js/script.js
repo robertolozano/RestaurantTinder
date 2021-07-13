@@ -416,7 +416,7 @@ function signIn(){
     if (user) {
       // User is signed in.
       console.log("user " + user.displayName + " is already signed in");
-      window.location.href = "./profile";
+      window.location.href = "./profile.html";
 
     } else {
       firebase.auth().signInWithPopup(provider).then((result) => {
