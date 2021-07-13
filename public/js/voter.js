@@ -59,6 +59,7 @@ function displayWinner(info){
   // FIXME
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
+      console.log(user);
       console.log("sending the users email");
       database.ref('/users/'+user.email+"/prev_restaurants").update({
         restaurant_info: info
