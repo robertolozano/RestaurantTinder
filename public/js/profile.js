@@ -57,6 +57,8 @@ function setUp2(imageurl, index, name) {
     card_info_div.appendChild(restaurant_address);
 }
 
+var provider = new firebase.auth.GoogleAuthProvider();
+
 function signIn(){
     console.log("pressed sign in button")
     firebase.auth().onAuthStateChanged(function(user) {
