@@ -1,6 +1,8 @@
 //when window first loads, voter.html will grab all restaurants
 window.onload= getRestaurantsFromServer();
 
+var database = firebase.database();
+
 let show_reviews = document.getElementById("business_reviews")
 show_reviews.addEventListener("click", show_reviews_func);
 
@@ -47,9 +49,6 @@ connection.onmessage = event => {
     console.log(msgObj.type);
   }
 };
-
-var database = firebase.database();
-
 
 //Info is a json file containing all info: info.name, info.id
 function displayWinner(info){
