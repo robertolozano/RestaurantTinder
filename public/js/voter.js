@@ -48,6 +48,9 @@ connection.onmessage = event => {
   }
 };
 
+var database = firebase.database();
+
+
 //Info is a json file containing all info: info.name, info.id
 function displayWinner(info){
   console.log("We have a winner")
