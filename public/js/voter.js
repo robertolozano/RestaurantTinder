@@ -69,7 +69,7 @@ function displayWinner(info){
         name_data: info.name_data,
         price_data: info.price_data,
         rating_data: info.rating_data,
-        reviews_data: info.review_data,
+        reviews_data: info.reviews_data,
         round_votes_data: info.round_votes_data,
         total_votes_data: info.total_votes_data
       });
