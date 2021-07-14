@@ -63,15 +63,15 @@ function displayWinner(info){
       console.log("sending the users email");
       
       database.ref('/users/'+user.uid+"/prev_restaurants/"+user.id_data).update({
-        id_data: user.id_data,
-        image_url_data: user.image_url_data,
-        location_data: user.location_data,
-        name_data: user.name_data,
-        price_data: user.price_data,
-        rating_data: user.rating_data,
-        reviews_data: user.review_data,
-        round_votes_data: user.round_votes_data,
-        total_votes_data: user.total_votes_data
+        id_data: info.id_data,
+        image_url_data: info.image_url_data,
+        location_data: info.location_data,
+        name_data: info.name_data,
+        price_data: info.price_data,
+        rating_data: info.rating_data,
+        reviews_data: info.review_data,
+        round_votes_data: info.round_votes_data,
+        total_votes_data: info.total_votes_data
       });
 
       database.ref('/users/'+user.uid).update({
