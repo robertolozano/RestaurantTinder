@@ -23,38 +23,57 @@ function displayRestaurant(restaurant) {
     card.className = "card";
           
     restaurant_image = document.createElement('img');
-    // restaurant_image.id = "restaurant_image_" + index;
     restaurant_image.src = restaurant.image_url_data;
   
     card_info_div = document.createElement('div');
     card_info_div.className = "card_info";
 
     restaurant_name = document.createElement('P');
-    restaurant_stars = document.createElement('P');
-    restaurant_address = document.createElement('P');
-  
     var t = document.createTextNode(restaurant.name_data);
     restaurant_name.appendChild(t);
-    t = document.createTextNode("5 Stars");
-    restaurant_stars.appendChild(t);
+    restaurant_price = document.createElement('P');
+    t = document.createTextNode(restaurant.price_data);
+    restaurant_price.appendChild(t);
 
+    restaurant_stars_div = document.createElement('div');
+    restaurant_stars = document.createElement('div');
+    star1 = document.createElement('i');
+    star1.className = "far fa-star";
+    star2 = document.createElement('i');
+    star1.className = "far fa-star";
+    star3 = document.createElement('i');
+    star1.className = "far fa-star";
+    star4 = document.createElement('i');
+    star1.className = "far fa-star";
+    star5 = document.createElement('i');
+    star1.className = "far fa-star";
+
+    restaurant_address = document.createElement('P');
     location_data = JSON.parse(restaurant.location_data)
     t = document.createTextNode(`${location_data.address1}, ${location_data.city}, ${location_data.state}`);
     restaurant_address.appendChild(t);
 
+
+    document.getElementById("card_section").appendChild(card);
+    card.appendChild(restaurant_image);
+
+    card_info_div.appendChild(restaurant_name);
+    card_info_div.appendChild(restaurant_price);
+
+    restaurant_stars.appendChild(star1);
+    restaurant_stars.appendChild(star2);
+    restaurant_stars.appendChild(star3);
+    restaurant_stars.appendChild(star4);
+    restaurant_stars.appendChild(star5);
+    restaurant_stars_div.appendChild(restaurant_stars);
+    card_info_div.appendChild(restaurant_stars_div);
+
+    card_info_div.appendChild(restaurant_address);
+    card.appendChild(card_info_div);
     // button_yes.addEventListener("click", function (){
     //   button_click("yes " + name);
     // });
-   
-    document.getElementById("card_section").appendChild(card);
-    card.appendChild(restaurant_image);
-    card_info_div.appendChild(restaurant_name);
-    card_info_div.appendChild(restaurant_stars);
-    card_info_div.appendChild(restaurant_address);
-    card.appendChild(card_info_div);
-    card_info_div.appendChild(restaurant_name);
-    card_info_div.appendChild(restaurant_stars);
-    card_info_div.appendChild(restaurant_address);
+    reviewGetRating(star1, star2, star3, star4, star5, restaurant.rating_data);
 }
 
 var provider = new firebase.auth.GoogleAuthProvider();
