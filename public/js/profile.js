@@ -94,6 +94,15 @@ function setUp(){
         if (user) {
             console.log("user already signed in should be changed to profile")
             signInButton.textContent = "Profile"
+
+
+            var selectAll = database.ref('/users/prev_restaurants/')
+            selectAll.once('value', (snapshot) => {
+              const data = snapshot.val();
+              console.log("This is the data!-------------------", data, "this is the end of profile data");
+            });
+
+
         } else {
             console.log('user not signed in change to log in')
             signInButton.textContent = "Log In"
