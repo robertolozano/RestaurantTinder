@@ -271,17 +271,22 @@ function getNextRestaurant(){
   }
   catch{
     console.log("made it into catch")
-    document.getElementById("business_pic").src = "https://cdn.glitch.com/aa77cb65-0ae2-4388-9521-dc70cf3b8f55%2Flogo-removebg-preview%20(1).png?v=1590852320072";
-    document.getElementById("business").textContent = "Waiting for other voters..."
-    document.getElementById("business_price").textContent = "";
-    document.getElementById("business_address").textContent = ""
-    document.getElementById("round1_votes").textContent = "";
-    reviewGetRating(document.getElementById("first_star"),
-              document.getElementById("second_star"),
-              document.getElementById("third_star"),
-              document.getElementById("fourth_star"),
-              document.getElementById("fifth_star"),
-              0);
+
+    document.getElementById("loader_header").textContent = "Waiting for other votes...";
+    document.getElementById("loader_div").className = "shown";
+    document.getElementById("swiper-container").className = "hidden";
+    
+    // document.getElementById("business_pic").src = "https://cdn.glitch.com/aa77cb65-0ae2-4388-9521-dc70cf3b8f55%2Flogo-removebg-preview%20(1).png?v=1590852320072";
+    // document.getElementById("business").textContent = "Waiting for other voters..."
+    // document.getElementById("business_price").textContent = "";
+    // document.getElementById("business_address").textContent = ""
+    // document.getElementById("round1_votes").textContent = "";
+    // reviewGetRating(document.getElementById("first_star"),
+    //           document.getElementById("second_star"),
+    //           document.getElementById("third_star"),
+    //           document.getElementById("fourth_star"),
+    //           document.getElementById("fifth_star"),
+    //           0);
     return;
   }
 }
