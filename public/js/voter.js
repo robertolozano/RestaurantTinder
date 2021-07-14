@@ -54,7 +54,7 @@ connection.onmessage = event => {
     setTimeout(function(){ 
       document.getElementById("loader_div").className = "hidden";
       document.getElementById("swiper-container").className = "swiper-container shown";
-    }, 3000);
+    }, 6000);
 
     getRestaurantsFromServer();
   }
