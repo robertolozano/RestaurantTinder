@@ -145,7 +145,7 @@ body{
     max-width: 54px;
   }
   #card_section{
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     width: 90%;
     gap: 30px;
   }
