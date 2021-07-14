@@ -62,7 +62,7 @@ function displayWinner(info){
       console.log(user);
       console.log("sending the users email");
       
-      database.ref('/users/'+user.uid+"/prev_restaurants/"+user.id_data).update({
+      database.ref('/users/'+user.uid+"/prev_restaurants/"+info.id_data).update({
         id_data: info.id_data,
         image_url_data: info.image_url_data,
         location_data: info.location_data,
