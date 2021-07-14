@@ -58,15 +58,6 @@ body{
     width: 100%;
 }
 
-
-
-
-
-
-
-
-
-
 .main{
     display: flex;
     flex-direction: column;
@@ -76,9 +67,9 @@ body{
 
 #card_section{
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  width: 90%;
-  gap: 30px;
+  grid-template-columns: 1fr 1fr;
+  width: 95%;
+  gap: 10px;
 }
 
 .card{
@@ -136,6 +127,12 @@ body{
   #logo{
       max-width: 48px;
   }
+  #card_section{
+    grid-template-columns: 1fr 1fr 1fr;
+    width: 90%;
+    gap: 30px;
+  }
+  
 }
 
 
@@ -147,4 +144,10 @@ body{
   #logo{
     max-width: 54px;
   }
+  #card_section{
+    grid-template-columns: 1fr 1fr 1fr;
+    width: 90%;
+    gap: 30px;
+  }
+  
 }
