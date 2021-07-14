@@ -104,12 +104,13 @@ function setUp(){
             selectAll.once('value', (snapshot) => {
               const data = snapshot.val();
               restaurantList = data;
-              console.log("This is the data!-------------------", data, "this is the end of profile data");
-            });
 
-            for (const property in restaurantList) {
+              for (const property in restaurantList) {
                 console.log(`${property}: ${restaurantList[property]}`);
-            }
+              }
+
+            //   console.log("This is the data!-------------------", data, "this is the end of profile data");
+            });
 
         } else {
             console.log('user not signed in change to log in')
