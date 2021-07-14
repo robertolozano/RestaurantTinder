@@ -107,6 +107,13 @@ function setUp(){
 
               for (const property in restaurantList) {
                 console.log(`${property}: ${restaurantList[property]}`);
+
+                var restaurant = restaurantList[property];
+
+                for (const property2 in restaurant) {
+                    console.log(`${property2}: ${restaurant[property2]}`);    
+                }
+
               }
 
             //   console.log("This is the data!-------------------", data, "this is the end of profile data");
