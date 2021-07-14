@@ -90,6 +90,8 @@ function signIn(){
   
 var database = firebase.database();
 
+var restaurantList;
+
 function setUp(){
     let signInButton = document.getElementById("sign_in_button");
     firebase.auth().onAuthStateChanged(function(user) {
@@ -101,9 +103,13 @@ function setUp(){
             var selectAll = database.ref('/users/'+user.uid+'/prev_restaurants/')
             selectAll.once('value', (snapshot) => {
               const data = snapshot.val();
+              restaurantList = data;
               console.log("This is the data!-------------------", data, "this is the end of profile data");
             });
 
+            for (const property in restaurantList) {
+                console.log(`${property}: ${restaurantList[property]}`);
+            }
 
         } else {
             console.log('user not signed in change to log in')
