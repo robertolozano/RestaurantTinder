@@ -98,7 +98,7 @@ function setUp(){
             signInButton.textContent = "Profile"
 
             console.log(user);
-            var selectAll = database.ref('/users/'+user.uid+'prev_restaurants/')
+            var selectAll = database.ref('/users/'+user.uid+'/prev_restaurants/')
             selectAll.once('value', (snapshot) => {
               const data = snapshot.val();
               console.log("This is the data!-------------------", data, "this is the end of profile data");
