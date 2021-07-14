@@ -31,6 +31,7 @@ function displayRestaurant(restaurant) {
     restaurant_name = document.createElement('P');
     var t = document.createTextNode(restaurant.name_data);
     restaurant_name.appendChild(t);
+
     restaurant_price = document.createElement('P');
     t = document.createTextNode(restaurant.price_data);
     restaurant_price.appendChild(t);
@@ -75,6 +76,25 @@ function displayRestaurant(restaurant) {
     // });
     reviewGetRating(star1, star2, star3, star4, star5, restaurant.rating_data);
 }
+
+function reviewGetRating(first_star, second_star, third_star, fourth_star, fifth_star, number){
+    var stars_array = [first_star, second_star, third_star, fourth_star, fifth_star];
+  
+    number_whole_stars = Math.floor(number);
+    has_half_star = number % 1;
+  
+    for(let i = 0; i < number_whole_stars; i++){
+      stars_array[i].className = "fas fa-star";
+    }
+  
+    for(let i = number_whole_stars; i < 5; i++){
+      stars_array[i].className = "far fa-star";
+    }
+  
+    if(has_half_star == 0.5){
+      stars_array[number_whole_stars].className = "fas fa-star-half-alt";
+    }
+  }
 
 var provider = new firebase.auth.GoogleAuthProvider();
 
