@@ -88,6 +88,8 @@ function signIn(){
     });
 }
   
+var database = firebase.database();
+
 function setUp(){
     let signInButton = document.getElementById("sign_in_button");
     firebase.auth().onAuthStateChanged(function(user) {
