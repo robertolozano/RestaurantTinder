@@ -39,7 +39,7 @@ function displayRestaurant(restaurant) {
     restaurant_stars.appendChild(t);
 
     location_data = JSON.parse(restaurant.location_data)
-    t = document.createTextNode(location_data.address1 + location_data.city + location_data.state);
+    t = document.createTextNode(`${location_data.address1}, ${location_data.city}, ${location_data.state}`);
     restaurant_address.appendChild(t);
 
     // button_yes.addEventListener("click", function (){
