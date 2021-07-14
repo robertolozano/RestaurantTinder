@@ -68,6 +68,10 @@ connection.onmessage = event => {
 function displayWinner(info){
   console.log("We have a winner")
 
+  document.getElementById("loader_div").className = "hidden";
+  document.getElementById("swiper-container").className = "swiper-container shown";
+
+  
   console.log(info)
 
   // FIXME
@@ -272,7 +276,7 @@ function getNextRestaurant(){
   catch{
     console.log("made it into catch")
 
-    document.getElementById("loader_header").textContent = "Waiting for other votes...";
+    document.getElementById("loader_header").textContent = "Waiting for other voters...";
     document.getElementById("loader_div").className = "shown";
     document.getElementById("swiper-container").className = "hidden";
     
