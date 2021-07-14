@@ -42,6 +42,20 @@ connection.onmessage = event => {
     displayWinner(msgObj.info)
   }
   else if(msgObj.type == "newRound"){ //new round; grab restaurants again
+
+    document.getElementById("loader_header").textContent = "Removing Restaurants With Lowest Votes";
+    document.getElementById("loader_div").className = "shown";
+    document.getElementById("swiper-container").className = "hidden";
+
+    setTimeout(function(){ 
+      document.getElementById("loader_header").textContent = "Preparing For Next Round";
+    }, 3000);
+
+    setTimeout(function(){ 
+      document.getElementById("loader_div").className = "hidden";
+      document.getElementById("swiper-container").className = "shown";
+    }, 3000);
+
     getRestaurantsFromServer();
   }
   else {
