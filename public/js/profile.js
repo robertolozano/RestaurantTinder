@@ -1,5 +1,5 @@
 window.onload = setUp();
-window.onload = setUp2();
+// window.onload = setUp2();
 
 let signInButton = document.getElementById("sign_in_button");
 signInButton.addEventListener("click", signIn);
@@ -18,15 +18,13 @@ firebase.auth().onAuthStateChanged(function(user) {
     }
 });
 
-function setUp2(imageurl, index, name) {
-    imageurl = "https://miro.medium.com/max/1200/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg";
-
+function displayRestaurant(restaurant) {
     card = document.createElement('div');
     card.className = "card";
           
     restaurant_image = document.createElement('img');
     // restaurant_image.id = "restaurant_image_" + index;
-    restaurant_image.src = imageurl;
+    restaurant_image.src = restaurant.image_url_data;
   
     card_info_div = document.createElement('div');
     card_info_div.className = "card_info";
@@ -35,11 +33,11 @@ function setUp2(imageurl, index, name) {
     restaurant_stars = document.createElement('P');
     restaurant_address = document.createElement('P');
   
-    var t = document.createTextNode("Open Rice Kitchen");
+    var t = document.createTextNode(restaurant.name_data);
     restaurant_name.appendChild(t);
     t = document.createTextNode("5 Stars");
     restaurant_stars.appendChild(t);
-    t = document.createTextNode("123 Davis Rd.");
+    t = document.createTextNode(restaurant.location_data.address1);
     restaurant_address.appendChild(t);
 
     // button_yes.addEventListener("click", function (){
@@ -109,11 +107,7 @@ function setUp(){
                 console.log(`${property}: ${restaurantList[property]}`);
 
                 var restaurant = restaurantList[property];
-
-                for (const property2 in restaurant) {
-                    console.log(`${property2}: ${restaurant[property2]}`);    
-                }
-
+                displayRestaurant(restaurant);
               }
 
             //   console.log("This is the data!-------------------", data, "this is the end of profile data");
@@ -124,4 +118,8 @@ function setUp(){
             signInButton.textContent = "Log In"
         }
     });
+}
+
+func displayRestaurant(restaurant){
+
 }
