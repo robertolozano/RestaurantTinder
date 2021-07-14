@@ -119,7 +119,3 @@ function setUp(){
         }
     });
 }
-
-func displayRestaurant(restaurant){
-
-}
