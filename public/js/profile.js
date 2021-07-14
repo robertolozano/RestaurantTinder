@@ -37,6 +37,7 @@ function displayRestaurant(restaurant) {
     restaurant_name.appendChild(t);
     t = document.createTextNode("5 Stars");
     restaurant_stars.appendChild(t);
+    console.log(restaurant.location_data)
     t = document.createTextNode(restaurant.location_data.address1);
     restaurant_address.appendChild(t);
 
