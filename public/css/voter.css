@@ -396,7 +396,7 @@ header{
   border-radius: 5px;
   justify-self:center;
   height: auto;
-  width: auto;
+  width: 80%;
   align-items:center;
   border: 4px solid black;
 }
@@ -407,11 +407,12 @@ header{
 }
 
 #close_reviews{
-  position: absolute;
-  right: 5%;
-  top: 5%;
+  /* position: absolute; */
   font-size: 40px;
   color: black;
+  justify-self: flex-end;
+  align-self: flex-end;
+  margin-right: 2%;
 }
 
 #review1, #review2, #review3{
