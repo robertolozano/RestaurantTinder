@@ -12,7 +12,7 @@ function profileButton(){
 
 function displayRestaurant(restaurant) {
     card = document.createElement('div');
-    card.className = "card";
+    card.className = "card slide_animation";
           
     restaurant_image = document.createElement('img');
     restaurant_image.src = restaurant.image_url_data;
