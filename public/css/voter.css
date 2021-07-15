@@ -413,6 +413,7 @@ header{
   justify-self: flex-end;
   align-self: flex-end;
   margin-right: 2%;
+  cursor: pointer;
 }
 
 #review1, #review2, #review3{
