@@ -26,6 +26,11 @@ body{
   padding-left: 30px;
 }
 
+#hungr_header{
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
 #right_navbar{
   width: 50%;
   display: flex;
