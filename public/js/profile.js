@@ -99,6 +99,14 @@ function googleLogIn(){
         firebase.auth().signOut().then(() => {
             console.log("User logged out successfully");
             logInWithGoogle.textContent = "Log in with Google";
+
+            if (document.getElementById("card_section").hasChildNodes()) {
+                while (document.getElementById("card_section").firstChild) {
+                    document.getElementById("card_section").removeChild(document.getElementById("card_section").firstChild);
+                }
+            }
+
+
         }).catch((error) => {
             console.log("User logout error");
         });
