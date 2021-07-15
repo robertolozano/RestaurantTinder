@@ -188,6 +188,36 @@ function displaySearchResults(restaurants, flag){
       restaurantList.push(restaurants);
     }
 
+
+    scroll_right = document.createElement('button'); 
+    scroll_right.className = "scroll_right";
+    scroll_right.innerHTML = ">";
+  
+    scroll_left = document.createElement('button'); 
+    scroll_left.className = "scroll_left";
+    scroll_left.innerHTML = "<";
+  
+    search_results.appendChild(scroll_left)
+    search_results.appendChild(scroll_right)
+  
+    scroll_right.addEventListener('mouseover', function () {
+      scrollRightInterval = setInterval(function(){
+        document.getElementById("queued_restaurants").scrollLeft += 10;
+      }, 10);
+    });
+    scroll_right.addEventListener('mouseout', function () {
+        clearInterval(scrollRightInterval);
+    });
+  
+    scroll_left.addEventListener('mouseover', function () {
+      scrollLeftInterval = setInterval(function(){
+        document.getElementById("queued_restaurants").scrollLeft -= 10;
+      }, 10);
+    });
+    scroll_left.addEventListener('mouseout', function () {
+        clearInterval(scrollLeftInterval);
+    });  
+
   }
   else{ //0 == search
     add_restaurant.innerHTML = "Add";
@@ -204,6 +234,39 @@ function displaySearchResults(restaurants, flag){
     });
 
     search_results = document.getElementById("search_results");
+
+
+    scroll_right = document.createElement('button'); 
+    scroll_right.className = "scroll_right";
+    scroll_right.innerHTML = ">";
+  
+    scroll_left = document.createElement('button'); 
+    scroll_left.className = "scroll_left";
+    scroll_left.innerHTML = "<";
+  
+    search_results.appendChild(scroll_left)
+    search_results.appendChild(scroll_right)
+  
+    scroll_right.addEventListener('mouseover', function () {
+      scrollRightInterval = setInterval(function(){
+        document.getElementById("search_results").scrollLeft += 10;
+      }, 10);
+    });
+    scroll_right.addEventListener('mouseout', function () {
+        clearInterval(scrollRightInterval);
+    });
+  
+    scroll_left.addEventListener('mouseover', function () {
+      scrollLeftInterval = setInterval(function(){
+        document.getElementById("search_results").scrollLeft -= 10;
+      }, 10);
+    });
+    scroll_left.addEventListener('mouseout', function () {
+        clearInterval(scrollLeftInterval);
+    });
+  
+
+
   }
 
   search_results.appendChild(slide);

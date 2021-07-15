@@ -304,6 +304,32 @@ input{
   /* border-top: 1px solid black; */
 }
 
+.scroll_right{
+  position: absolute;
+  align-self: center;
+  z-index: 10;
+  width: 60px;
+  height: 60px;
+  right: 1%;
+  border-radius: 30px;
+  background-color: #77B1E7;
+  font-weight: bolder;
+}
+
+.scroll_left{
+  position: absolute;
+  align-self: center;
+  z-index: 10;
+  width: 60px;
+  height: 60px;
+  left: 1%;
+  border-radius: 30px;
+  background-color: #77B1E7;
+  font-weight: bolder;
+}
+
+
+
 /* Tablet------------------------------------------------------ */
 @media (min-width: 600px) and (max-width: 768px){
   .navbar{
