@@ -231,17 +231,14 @@ body{
 
 
 .button-wrapper{
-    width: 200px;
-    height: 100px;
-
-    width: 40%;
-    height: 85%;
-
+    width: 15rem;
+    height: 4rem;
     position: relative;
     justify-self: center;
     display: flex;
     overflow: hidden;
     font-family: 'Jost', sans-serif;
+    margin-top: 0px;
 }
 
 .button-project-link{
@@ -329,10 +326,8 @@ body{
         align-self: center;
     }
     .button-wrapper{
-        width: 10vh;
-        height: 10vw;
-        width: 40%;
-        height: 85%;
+        width: 10rem;
+        height: 3rem;
     }
     .button-project-link{
         font-size: 25px;
@@ -412,8 +407,8 @@ body{
         align-self: center;
     }
     .button-wrapper{
-        width: 10vh;
-        height: 10vw;
+        width: 10rem;
+        height: 3rem;
     }
     .button-project-link{
         font-size: 15px;
