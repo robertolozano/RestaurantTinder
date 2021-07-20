@@ -301,6 +301,9 @@ input{
   border-radius: 30px;
   background-color: #77B1E7;
   font-weight: bolder;
+
+
+  opacity: 0;
 }
 
 .scroll_left{
@@ -313,6 +316,9 @@ input{
   border-radius: 30px;
   background-color: #77B1E7;
   font-weight: bolder;
+
+  opacity: 0;
+
 }
 
 #location_div{
@@ -372,6 +378,14 @@ input{
   #link{
     font-size: 17px;
   }
+
+
+  .scroll_right{
+    opacity: 100;
+  }
+  .scroll_left{
+    opacity: 100;
+  }
 }
 
 
@@ -410,6 +424,12 @@ input{
   }
   .host-buttons{
     font-size: 25px;
+  }
+  .scroll_right{
+    opacity: 100;
+  }
+  .scroll_left{
+    opacity: 100;
   }
 }
 
