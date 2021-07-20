@@ -10,65 +10,75 @@ body{
     font-family: 'Jost', sans-serif;
 }
 
+
+
 .navbar{
-    font-family: 'Jost', sans-serif;
-    font-size: 20px;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    padding-top: 10px;
-    margin: 0px 0px 0px 0px;
+    font-family: 'Jost', sans-serif;
+    height: 50px;
+}
+  
+#left_navbar{
+    display: flex;
+    flex-direction: row;
+    width: 50%;
+    padding-left: 20px;
+    align-items: center;
+    /* mobile */
+    height: 100%;
 }
 
-#left_navbar{
-  display: flex;
-  flex-direction: row;
-  width: 50%;
-  padding-left: 30px;
+#left_navbar div h1{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
+
 
 #hungr_header{
     color: rgb(114, 164, 204);
     text-decoration: none;
-  }
+}
 
 #right_navbar{
-  width: 50%;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  padding-right: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    width: 50%;
+    padding-right: 10px;
+    height: 100%;
+}
+
+.nav_button_size{
+    font-size: 16px 
 }
 
 .nav_button{
-  background: none;
-  border: none;
-  font-family: 'Jost', sans-serif;
-  font-size: 40px;
-  color: rgb(114, 164, 204);
-  margin: 0px 0px 0px 20px;
-  font-weight: 600;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-#sign_in_button{
+    background: none;
+    border: none;
+    font-family: 'Jost', sans-serif;
+    font-weight: 600;
     color: rgb(114, 164, 204);
+    margin: 0px 0px 0px 10px;
+    text-decoration: none;
 }
 
 #logo{
-    display: flex;
-    max-height: auto;
-    max-width: 50px;
+    max-height: 30px;
     padding-left: 10px;
+    height: 100%;
+    width: auto;
+}
+#logoPic{
+    width: auto;
+    height: 100%;
 }
 
-#logoPic{
-    display: flex;
-    height: 100%;
-    width: 100%;
-}
 
 
 
@@ -133,11 +143,13 @@ body{
 #hero_image_div{
     display: flex;
     justify-content: flex-start;
+    max-width: 100%;
 }
 
 #hero_image{
-    height: 100%;
-    max-width: auto;
+    height: auto;
+    max-width: 100%;
+
 }
 
 #background{
@@ -203,6 +215,7 @@ body{
 #second_image{
     height: 100%;
     max-width: 100%;
+    max-height: 100%;
 }
 
 #third_section{
@@ -305,22 +318,100 @@ footer div a{
 }
 
 
-@media only screen and (max-width: 1400px) {
+
+
+
+
+#hero_text{
+    font-size: 20px;
+}
+#hero_section{
+    height: 300px;
+}
+#background{
+    height: 25px;
+}
+.background_short{
+    width: 0px;
+    transition: all 1s ease;
+    transition-delay: 0s;
+}
+.background_long{
+    width: 110px;
+    transition: all 1s ease;
+    transition-delay: 0s;
+}
+#hero_image{
+    height: 80%;
+    align-self: center;
+}
+.button-wrapper{
+    width: 10rem;
+    height: 3rem;
+}
+.button-project-link{
+    font-size: 15px;
+}
+#second_section{
+    margin: 0px;
+    height: 60vw;
+    width: 90%;
+    grid-template-columns: 45% 55%;
+}
+#second_image{
+    width: auto;
+    height: auto;
+    justify-self: center;
+    align-self: center;
+}
+#second_text{
+    font-size: 20px;
+}
+#third_section{
+    font-size: 10px;
+    width: 90%;
+    text-align: center;
+}
+
+
+
+/* Tablet------------------------------------------------------ */
+@media (min-width: 600px) and (max-width: 768px){
     .navbar{
-        font-size: 10px;
+        height: 70px;
+    }
+    .nav_button_size{
+        font-size: 30px
+    }
+    .nav_button{
+        margin: 0px 0px 0px 20px;
+    }
+    #logo{
+        max-height: 50px;
+        padding-left: 10px;
+        height: 100%;
+        width: auto;
     }
     #logoPic{
-        width: 40px;;
+        width: auto;
+        height: 100%;
     }
-    #left_navbar,
-    #right_navbar,
-    .nav_button,
-    #hero_text_div{
-        font-size: 25px;
+    #right_navbar{
+        padding-right: 25px;
     }
-    #left_navbar{
-        font-size: 15px;
+    #search_bar{
+        font-size: 19px;
     }
+    input{
+        font-size: 17px;
+        padding: 5px 0px 5px 0px;
+    }
+    #get_restaurants{
+    }
+    #link{
+        font-size: 17px;
+    }
+
     #hero_text{
         font-size: 25px;
     }
@@ -360,8 +451,8 @@ footer div a{
 
     }
     #second_image{
-        width: 300px;
-        height: 300px;
+        width: auto;
+        height: auto;
         justify-self: center;
         align-self: center;
 
@@ -377,39 +468,57 @@ footer div a{
 }
 
 
-
-
-
-
-
-
-
-
-
-@media only screen and (max-width: 480px) {
+/* Desktop------------------------------------------------- */
+@media (min-width: 768px){
     .navbar{
-        font-size: 10px;
+      height: 70px;
+    }
+    .nav_button_size{
+      font-size: 30px
+    }
+    .nav_button{
+      margin: 0px 0px 0px 20px;
+    }
+    #logo{
+        max-height: 50px;
+        padding-left: 10px;
+        height: 100%;
+        width: auto;
     }
     #logoPic{
-        width: 40px;;
+        width: auto;
+        height: 100%;
     }
-    #left_navbar,
-    #right_navbar,
-    .nav_button,
-    #hero_text_div{
+    #right_navbar{
+        padding-right: 35px;
+    }
+    #search_bar{
+      font-size: 24px;
+    }
+    input{
+      font-size: 21px;
+      padding: 5px 0px 5px 0px;
+    }
+    #get_restaurants{
+    }
+    #link{
+      font-size: 19px;
+    }
+    .host-buttons{
         font-size: 25px;
     }
-    #left_navbar{
-        font-size: 15px;
-    }
+
+
+
+
     #hero_text{
-        font-size: 20px;
+        font-size: 30px;
     }
     #hero_section{
-        height: 300px;
+        height: 400px;
     }
     #background{
-        height: 25px;
+        height: 40px;
     }
     .background_short{
         width: 0px;
@@ -417,7 +526,7 @@ footer div a{
         transition-delay: 0s;
     }
     .background_long{
-        width: 110px;
+        width: 165px;
         transition: all 1s ease;
         transition-delay: 0s;
     }
@@ -426,30 +535,34 @@ footer div a{
         align-self: center;
     }
     .button-wrapper{
-        width: 10rem;
-        height: 3rem;
+        width: 12rem;
+        height: 4rem;
     }
     .button-project-link{
-        font-size: 15px;
+        font-size: 25px;
     }
     #second_section{
         margin: 0px;
-        height: 60vw;
+        height: 40vw;
         width: 90%;
-        grid-template-columns: 45% 55%;
+        grid-template-columns: 35% 65%;
     }
     #second_image{
-        width: 20vh;
-        height: 40vw;
+        width: auto;
+        height: auto;
         justify-self: center;
         align-self: center;
     }
     #second_text{
-        font-size: 20px;
+        font-size: 45px;
     }
     #third_section{
-        font-size: 10px;
+        font-size: 20px;
         width: 90%;
         text-align: center;
     }
+    
+
+
 }
+  

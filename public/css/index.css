@@ -1,35 +1,48 @@
+
+
 *{
-    margin: 0;
-    padding: 0;
-    font-family: 'Jost', sans-serif;
+  margin: 0;
+  padding: 0;
+  font-family: 'Jost', sans-serif;
 }
 
 body{
   background-color: #f3f7fc;
-
 }
 
 button{
   cursor: pointer;
 }
 
+
+
+
 .navbar{
-  font-family: 'Jost', sans-serif;
-  font-size: 20px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding-top: 10px;
-  margin: 0px 0px 0px 0px;
+  font-family: 'Jost', sans-serif;
+  height: 50px;
 }
 
 #left_navbar{
-display: flex;
-flex-direction: row;
-width: 50%;
-padding-left: 30px;
+  display: flex;
+  flex-direction: row;
+  width: 50%;
+  padding-left: 20px;
+  align-items: center;
+  /* mobile */
+  height: 100%;
 }
+
+#left_navbar div h1{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
 
 #hungr_header{
   color: rgb(114, 164, 204);
@@ -37,41 +50,43 @@ padding-left: 30px;
 }
 
 #right_navbar{
-width: 50%;
-display: flex;
-flex-direction: row;
-justify-content: flex-end;
-padding-right: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  width: 50%;
+  padding-right: 25px;
+  height: 100%;
+}
+
+.nav_button_size{
+  font-size: 16px
 }
 
 .nav_button{
-background: none;
-border: none;
-font-family: 'Jost', sans-serif;
-font-size: 40px;
-color: rgb(114, 164, 204);
-margin: 0px 0px 0px 20px;
-font-weight: 600;
-text-decoration: none;
-cursor: pointer;
+  background: none;
+  border: none;
+  font-family: 'Jost', sans-serif;
+  font-weight: 600;
+  color: rgb(114, 164, 204);
+  margin: 0px 0px 0px 10px;
+  text-decoration: none;
 }
 
-#sign_in_button{
-  color: rgb(114, 164, 204);
-}
 
 #logo{
-  display: flex;
-  max-height: auto;
-  max-width: 50px;
+  max-height: 30px;
   padding-left: 10px;
+  height: 100%;
+  width: auto;
+}
+#logoPic{
+  width: auto;
+  height: 100%;
 }
 
-#logoPic{
-  display: flex;
-  height: 100%;
-  width: 100%;
-}
+
+
 
 .slide_animation{
   animation: slide_animation;
@@ -84,13 +99,12 @@ cursor: pointer;
   100%{ opacity: 100%; transform: translate(0px, 0px);}
 }
 
-
 .main{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: auto;
-    color: rgb(114, 164, 204);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: auto;
+  color: rgb(114, 164, 204);
 }
 
 .main_header{
@@ -101,14 +115,14 @@ cursor: pointer;
 }
 
 #search_bar{
-    display: flex;
-    flex-direction: row;
-    font-size: 17px;
-    width: 100%;
-    height: auto;
-    color: rgb(114, 164, 204);
-    background-color: #f3f7fc;
-    justify-content: space-around;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  font-size: 17px;
+  width: 100%;
+  height: auto;
+  color: rgb(114, 164, 204);
+  background-color: #f3f7fc;
 }
 
 #search_bar input{
@@ -118,36 +132,28 @@ cursor: pointer;
 
 #get_restaurants_div{
   display: flex;
-  flex-direction: row;
-  width: 30%;
-  font-size: 3vw;
   flex-direction: column;
-
-
+  width: 30%;
+  /* font-size: 3vw; */
 }
 
-#location_div{
-}
 
-.autocomplete{
-}
 
 #location{
   border: 1px solid black;
 }
 
 #begin{
-  /* background-color: rgb(153, 185, 134); */
   z-index: 5;
 }
 
 .host-buttons{
-  background: none;
+  background-color: white;
   border: 2px solid rgb(114, 164, 204);
   border-radius: 10px;
   font-size: 3vw;
   color: rgb(114, 164, 204);
-  background-color: white;
+  height: 50%;
 }
 
 .hidden{
@@ -162,16 +168,14 @@ cursor: pointer;
 
 .slide2_div1{
   justify-content: space-between;
-  /* font-size: 25px; */
   padding-top: 9px;
   border-radius:50px;
   height: auto;
 }
 
 .slide2_div2{
-  /* font-size: 20px; */
   padding-top: 6px;
-  border-radius:50px;
+  border-radius: 50px;
 }
 
 .slide2_div1, .slide2_div2{
@@ -186,13 +190,13 @@ cursor: pointer;
 }
 
 .business_reviews{
-  margin-top: 5px;
-  background: none;
-  padding: 5px 8px 5px 8px;
-  font-size: 1rem;
   border-radius: 10px;
   border-style: solid;
   border-color: black;
+  background: none;
+  margin-top: 5px;
+  padding: 5px 8px 5px 8px;
+  font-size: 1rem;
 }
 
 .business_buttons{
@@ -235,41 +239,37 @@ cursor: pointer;
 }
 
 .business{
-    font-weight: 600;
+  font-weight: 600;
 }
 
 .business_pic{
-  width: 100%;
-  height: 50%;
   border-radius: 48px 48px 0px 0px;
   border-bottom: 1px solid black;
+  width: 100%;
+  height: 50%;
 }
 
 #search_results{
-  width: 95%;
-  height: auto;
   display: flex;
   flex-direction: row;
-
-  background-color: #f3f7fc;
   flex-wrap: nowrap;
   overflow-x: auto;
-  /* border-top: 1px solid black; */
-
+  width: 95%;
+  height: auto;
+  background-color: #f3f7fc;
 }
 
 .slide2{
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* box-sizing: border-box; */
   width: 300px;
   height: 50vh;
+  border: 2px solid black;
   border-radius:50px;
   flex: 0 0 auto;
   margin-right: 3px;
   margin: 20px 20px 20px 20px;
-  border: 2px solid black;
   color: black
 }
 
@@ -277,21 +277,18 @@ cursor: pointer;
   font-size: 1px;
 }
 
-
 input{
   padding: 8px 0px 8px 0px;
 }
 
 #queued_restaurants{
-  width: 95%;
-  height: auto;
   display: flex;
   flex-direction: row;
-  background-color: #f3f7fc;
   flex-wrap: nowrap;
   overflow-x: auto;
-  /* overflow-x: scroll; */
-  /* border-top: 1px solid black; */
+  width: 95%;
+  height: auto;
+  background-color: #f3f7fc;
 }
 
 .scroll_right{
@@ -318,16 +315,51 @@ input{
   font-weight: bolder;
 }
 
+#location_div{
+  display: flex;
+  flex-direction: row;
+  width: 30%;
+}
+
+#myInput{
+  color: black;
+  border: 1px solid black;
+}
+
+#search_input, #location_input{
+  font-size: auto;
+  width: 100%; 
+}
+
+#location{
+  width: 100%;
+  padding: 5px;
+  font-size: 16px;
+}
+
 
 
 /* Tablet------------------------------------------------------ */
 @media (min-width: 600px) and (max-width: 768px){
   .navbar{
-      font-size: 20px;
+    height: 70px;
+  }
+  .nav_button_size{
+    font-size: 30px
+  }
+  .nav_button{
+    margin: 0px 0px 0px 20px;
   }
   #logo{
-      max-width: 48px;
-  }
+    max-height: 50px;
+    padding-left: 10px;
+    height: 100%;
+    width: auto;
+}
+#logoPic{
+    width: auto;
+    height: 100%;
+}
   #search_bar{
     font-size: 19px;
   }
@@ -336,23 +368,34 @@ input{
     padding: 5px 0px 5px 0px;
   }
   #get_restaurants{
-    /* font-size: 17px; */
   }
   #link{
     font-size: 17px;
   }
-
 }
 
 
 /* Desktop------------------------------------------------- */
 @media (min-width: 768px){
   .navbar{
-    font-size: 24px;
+    height: 70px;
+  }
+  .nav_button_size{
+    font-size: 30px
+  }
+  .nav_button{
+    margin: 0px 0px 0px 20px;
   }
   #logo{
-    max-width: 54px;
-  }
+    max-height: 50px;
+    padding-left: 10px;
+    height: 100%;
+    width: auto;
+}
+#logoPic{
+    width: auto;
+    height: 100%;
+}
   #search_bar{
     font-size: 24px;
   }
@@ -361,7 +404,6 @@ input{
     padding: 5px 0px 5px 0px;
   }
   #get_restaurants{
-    /* font-size: 19px; */
   }
   #link{
     font-size: 19px;
@@ -422,29 +464,4 @@ https://www.w3schools.com/howto/howto_js_autocomplete.asp
   /*when navigating through the items using the arrow keys:*/
   background-color: DodgerBlue !important;
   color: #ffffff;
-}
-
-#location_div{
-  display: flex;
-  flex-direction: row;
-  width: 30%;
-}
-
-#location_div input{
-  padding: 5px;
-  font-size: 16px;
-
-}
-#myInput{
-  color: black;
-  border: 1px solid black;
-}
-
-#search_input, #location_input{
-  font-size: auto;
-  width: 100%; 
-}
-
-#location{
-  width: 100%;
 }
