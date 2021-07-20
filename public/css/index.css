@@ -363,11 +363,14 @@ input{
     padding-left: 10px;
     height: 100%;
     width: auto;
-}
-#logoPic{
-    width: auto;
-    height: 100%;
-}
+  }
+  #logoPic{
+      width: auto;
+      height: 100%;
+  }
+  #right_navbar{
+    padding-right: 35px;
+  } 
   #search_bar{
     font-size: 19px;
   }
@@ -409,11 +412,14 @@ input{
     padding-left: 10px;
     height: 100%;
     width: auto;
-}
-#logoPic{
-    width: auto;
-    height: 100%;
-}
+  }
+  #logoPic{
+      width: auto;
+      height: 100%;
+  }
+  #right_navbar{
+    padding-right: 35px;
+  }
   #search_bar{
     font-size: 24px;
   }

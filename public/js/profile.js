@@ -1,14 +1,11 @@
 window.onload = setUp();
 
-let signInButton = document.getElementById("sign_in_button");
-signInButton.addEventListener("click", profileButton);
+var provider = new firebase.auth.GoogleAuthProvider();
+var database = firebase.database();
+var restaurantList;
 
 let logInWithGoogle = document.getElementById("log_in_with_google");
 logInWithGoogle.addEventListener("click", googleLogIn);
-
-function profileButton(){
-    window.location.href = "./profile"
-}
 
 function displayRestaurant(restaurant) {
     card = document.createElement('div');
@@ -45,7 +42,6 @@ function displayRestaurant(restaurant) {
     location_data = JSON.parse(restaurant.location_data)
     t = document.createTextNode(`${location_data.address1}, ${location_data.city}, ${location_data.state}`);
     restaurant_address.appendChild(t);
-
 
     document.getElementById("card_section").appendChild(card);
     card.appendChild(restaurant_image);
@@ -87,45 +83,31 @@ function reviewGetRating(first_star, second_star, third_star, fourth_star, fifth
     }
 }
 
-var provider = new firebase.auth.GoogleAuthProvider();
-
 function googleLogIn(){
     console.log("pressed sign in button")
     let user = firebase.auth().currentUser;
-    // firebase.auth().onAuthStateChanged(function(user) {
     if (user) { // User is signed in.
         console.log("user " + user.displayName + " is already signed in");
-
         firebase.auth().signOut().then(() => {
             console.log("User logged out successfully");
             logInWithGoogle.textContent = "Log in with Google";
-
-            if (document.getElementById("card_section").hasChildNodes()) {
-                while (document.getElementById("card_section").firstChild) {
-                    document.getElementById("card_section").removeChild(document.getElementById("card_section").firstChild);
-                }
+            while (document.getElementById("card_section").firstChild) {
+                document.getElementById("card_section").removeChild(document.getElementById("card_section").firstChild);
             }
-
-
         }).catch((error) => {
             console.log("User logout error");
         });
-
-    } else {
+    } else { // User not signed in
         firebase.auth().signInWithPopup(provider).then((result) => {
             /** @type {firebase.auth.OAuthCredential} */
             var credential = result.credential;
-            // This gives you a Google Access Token. You can use it to access the Google API.
             var token = credential.accessToken;
             var user = result.user;
-            console.log(user)
-
-            database.ref('/users/').update({
-                userID: user.email
-            });
-
+            console.log("user " + user.displayName + " is signing in");
+            // database.ref('/users/').update({
+            //     userID: user.email
+            // });
             logInWithGoogle.textContent = "Log Out";
-
         }).catch((error) => {
             var errorCode = error.code;
             var errorMessage = error.message;
@@ -133,32 +115,20 @@ function googleLogIn(){
             var credential = error.credential;
         });
     }
-    // });
 }
-  
-var database = firebase.database();
-
-var restaurantList;
 
 function setUp(){
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
             console.log("user already signed in")
-            console.log(user);
             logInWithGoogle.textContent = "Log Out";
-
             var selectAll = database.ref('/users/'+user.uid+'/prev_restaurants/')
             selectAll.once('value', (snapshot) => {
-              const data = snapshot.val();
-              restaurantList = data;
-
-              for (const property in restaurantList) {
-                console.log(`${property}: ${restaurantList[property]}`);
-                var restaurant = restaurantList[property];
-                displayRestaurant(restaurant);
-              }
+                restaurantList = snapshot.val();
+                for (const property in restaurantList) {
+                    displayRestaurant(restaurantList[property]);
+                }
             });
-
         } else {
             console.log('user not signed in')
         }

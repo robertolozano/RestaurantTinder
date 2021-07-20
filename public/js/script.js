@@ -1,12 +1,11 @@
-// window.onload = setUp();
-
-var database = firebase.database();
-
 // List of keywords to search a restaurant
 let restaurants = ["Afghan", "African", "Arabian", "Argentine", "Armenian", "Asian Fusion", "Australian", "Austrian", "Bangladeshi", "Basque", "Barbeque", "Belgian", "Brasseries", "Brazilian", "Breakfast & Brunch", "British", "Buffets", "Bulgarian", "Burgers", "Burmese", "Cafes", "Cafeteria", "Cajun/Creole", "Cambodian", "Caribbean", "Catalan", "Cheesesteaks", "Chicken Wings", "Chicken Shop", "Chinese", "Coffee", "Comfort Food", "Creperies", "Cuban", "Czech", "Delis", "Diners", "Dinner Theater", "Eritrean", "Ethiopian", "Filipino", "Fish & Chips", "Fondue", "Food Court", "Food Stands", "French", "Game Meat", "Gastropubs", "Georgian", "German", "Gluten-Free", "Greek", "Guamanian", "Halal", "Hawaiian", "Himalayan/Nepalese", "Hong Kong Style Cafe", "Honduran", "Hot Dogs", "Fast Food", "Hot Pot", "Hungarian", "Iberian", "Indonesian", "Indian", "Irish", "Italian", "Japanese", "Kebab", "Korean", "Kosher", "Laotian", "Latin American", "Malaysian", "Mediterranean", "Mexican", "Middle Eastern", "Modern European", "Mongolian", "Moroccan", "American (New)", "New Mexican Cuisine", "Nicaraguan", "Noodles", "Pakistani", "Pan Asian", "Persian/Iranian", "Peruvian", "Pizza", "Polish", "Polynesian", "Pop-Up Restaurants", "Portuguese", "Poutineries", "Live/Raw Food", "Russian", "Salad", "Sandwiches", "Scandinavian", "Scottish", "Seafood", "Singaporean", "Slovakian", "Smoothie", "Somali", "Soul Food", "Soup", "Southern", "Spanish", "Sri Lankan", "Steakhouses", "Supper Clubs", "Sushi Bars", "Syrian", "Taiwanese", "Tapas Bars", "Tapas/Small Plates", "Tex-Mex", "Thai", "American (Traditional)", "Turkish", "Ukrainian", "Uzbek", "Vegan", "Vegetarian", "Vietnamese", "Waffles", "Wraps"];
-
-// let startButton = document.getElementById("start");
-// startButton.addEventListener("click", startFunction);
+var database = firebase.database();
+let keywords = document.getElementById("myInput");
+let locations = document.getElementById("location");
+let begin = document.getElementById("begin");
+begin.addEventListener("click", startGame);
+restaurantList = [];
 
 let get_restaurants = document.getElementById("get_restaurants");
 get_restaurants.addEventListener("click", searchRestaurants);
@@ -20,17 +19,6 @@ document.getElementById('location').onkeypress = function(e){
     return false;
   }
 }
-
-let begin = document.getElementById("begin");
-begin.addEventListener("click", startGame);
-
-let keywords = document.getElementById("myInput");
-let locations = document.getElementById("location");
-
-let signInButton = document.getElementById("sign_in_button");
-signInButton.addEventListener("click", signIn);
-
-var database = firebase.database();
 
 function startFunction(){
   let xhr = new XMLHttpRequest;
@@ -47,7 +35,6 @@ function startFunction(){
   xhr.send();
 }
 
-
 //Sends user search terms to server
 function searchRestaurants(){
   sendID();
@@ -58,7 +45,6 @@ function searchRestaurants(){
   xhr.onloadend = function(e) {
     if (xhr.readyState === 4 && xhr.status === 200) { 
       console.log(`Search found ${JSON.parse(xhr.response).businesses.length} restaurants`);
-      
       if (document.getElementById("search_results").hasChildNodes()) {
         while (document.getElementById("search_results").firstChild) {
           document.getElementById("search_results").removeChild(document.getElementById("search_results").firstChild);
@@ -69,7 +55,6 @@ function searchRestaurants(){
         displaySearchResults(JSON.parse(xhr.response).businesses[i], 0);
       }
       console.log("after displayresults")
-
     }
   };
   xhr.send(JSON.stringify(search));
@@ -85,7 +70,6 @@ function startGame(){
       if (xhr.readyState === 4 && xhr.status === 200) { 
         console.log("Game Started");
       }
-      //Redirect to voter page
       window.location.pathname = xhr.response;
     };
     xhr.send(JSON.stringify(restaurantList));
@@ -94,8 +78,6 @@ function startGame(){
     alert("Must have at least one restaurant to begin");
   }
 }
-
-restaurantList = [];
 
 function displaySearchResults(restaurants, flag){
   slide = document.createElement('div');
@@ -107,7 +89,6 @@ function displaySearchResults(restaurants, flag){
   business_pic = document.createElement('img');
   business_pic.src = restaurants.image_url;
   business_pic.className = "business_pic";
-
 
   info_section = document.createElement('div');
   info_section.className = "info_section";
@@ -166,7 +147,6 @@ function displaySearchResults(restaurants, flag){
   business_buttons = document.createElement('div');
   business_buttons.className = "business_buttons";
 
-
   if(flag == 1){ // 1 == queued
     add_restaurant.innerHTML = "Remove";
     add_restaurant.style.backgroundColor = "rgb(239 136 125)";
@@ -187,7 +167,6 @@ function displaySearchResults(restaurants, flag){
       search_results = document.getElementById("queued_restaurants");
       restaurantList.push(restaurants);
     }
-
 
     scroll_right = document.createElement('button'); 
     scroll_right.className = "scroll_right";
@@ -264,16 +243,12 @@ function displaySearchResults(restaurants, flag){
     scroll_left.addEventListener('mouseout', function () {
         clearInterval(scrollLeftInterval);
     });
-  
-
-
   }
 
   search_results.appendChild(slide);
   slide.appendChild(slide_cover);
   slide_cover.appendChild(business_pic);
   slide_cover.appendChild(info_section);
-  // slide_cover.appendChild(add_restaurant);
 
   info_section.appendChild(slide2_div1);
   info_section.appendChild(slide2_div2);
@@ -324,25 +299,20 @@ function sendID(){
   xhr.open("POST","/sendID", true);
   xhr.setRequestHeader("Content-Type", "application/json");
   xhr.onloadend = function(e) {
-    // if (xhr.status === 200) { 
-    console.log("Sent ID successfully");
-
-
-    console.log("sending the user_data");
+    console.log("sending user.email to gameInstance database");
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
-        console.log("sending the users email");
+        console.log("user.email pushed to gameInstance");
         database.ref('/gameInstance/'+id_value+"/users").update({
           user_data: user.email
         });
       } else {
-        console.log("sending guest");
+        console.log("guest pushed to gameInstance");
         database.ref('/gameInstance/'+id_value+"/users").update({
           user_data: "guest"
         });
       }
     });
-    // }
   };
   xhr.send(JSON.stringify(id));
 }
@@ -468,11 +438,4 @@ function createId() {
      result += characters.charAt(Math.floor(Math.random() * charactersLength));
   }
   return result;
-}
- //Authentication
- var provider = new firebase.auth.GoogleAuthProvider();
-
-function signIn(){
-  console.log("pressed sign in button");
-  window.location.href = "./profile";
 }
