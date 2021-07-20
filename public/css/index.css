@@ -304,6 +304,8 @@ input{
 
 
   opacity: 0;
+  visibility: hidden;
+
 }
 
 .scroll_left{
@@ -318,7 +320,7 @@ input{
   font-weight: bolder;
 
   opacity: 0;
-
+  visibility: hidden;
 }
 
 #location_div{
@@ -382,9 +384,11 @@ input{
 
   .scroll_right{
     opacity: 100;
+    visibility:visible;
   }
   .scroll_left{
     opacity: 100;
+    visibility:visible;
   }
 }
 
@@ -427,9 +431,11 @@ input{
   }
   .scroll_right{
     opacity: 100;
+    visibility:visible;
   }
   .scroll_left{
     opacity: 100;
+    visibility:visible;
   }
 }
 
