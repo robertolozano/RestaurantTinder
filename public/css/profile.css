@@ -65,6 +65,11 @@ body{
   text-decoration: none;
 }
 
+.nav_button:hover{
+  color: rgb(233, 139, 105);
+}
+
+
 
 #logo{
   max-height: 30px;
